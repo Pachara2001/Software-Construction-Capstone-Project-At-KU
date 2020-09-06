@@ -1,0 +1,14 @@
+
+
+.button1 {
+  -fx-background-color:  rgba(60,60,60); 
+  -fx-background-radius:  20;
+  -fx-cursor: hand;
+}
+
+.button1:hover {
+  -fx-background-color:  rgba(95,95,95);
+  
+}
+
+.tr:nth-child(even) {-fx-background-color: #f2f2f2;}
