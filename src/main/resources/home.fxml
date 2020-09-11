@@ -15,24 +15,10 @@
    <children>
       <ImageView fitHeight="600.0" fitWidth="806.0" layoutX="-7.0" pickOnBounds="true" style="-fx-opacity: 0.3;">
          <image>
-            <Image url="@../../Picture/Block-44-Condo1.jpg" />
+            <Image url="@Picture/Block-44-Condo1.jpg" />
          </image>
       </ImageView>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="179.0" layoutY="225.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../../Stylesheet/1.css" text="ADMIN" textFill="WHITE" AnchorPane.bottomAnchor="222.0" AnchorPane.leftAnchor="179.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="225.0">
-         <effect>
-            <Reflection />
-         </effect>
-         <font>
-            <Font name="System Bold Italic" size="28.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="108.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../Picture/outline_admin_panel_settings_white_48dp.png" />
-               </image>
-            </ImageView>
-         </graphic></Button>
-      <Button alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="470.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../../Stylesheet/1.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="164.0">
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="470.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@Stylesheet/1.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="164.0">
          <effect>
             <Reflection />
          </effect>
@@ -43,17 +29,16 @@
             <Cursor fx:constant="HAND" />
          </cursor>
          <graphic>
-            <ImageView fitHeight="108.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="108.0" fitWidth="90.0" preserveRatio="true">
                <image>
-                  <Image url="@../../Picture/outline_account_circle_white_48dp.png" />
+                  <Image url="@Picture/outline_account_circle_white_48dp.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
-      <AnchorPane layoutX="440.0" layoutY="219.0" />
       <ImageView fitHeight="54.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../Picture/baseline_help_white_48dp.png" />
+            <Image url="@Picture/baseline_help_white_48dp.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -71,6 +56,24 @@
             </Shadow>
          </effect>
       </Label>
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@Stylesheet/1.css" text="ADMIN" textFill="WHITE">
+         <effect>
+            <Reflection />
+         </effect>
+         <font>
+            <Font name="System Bold Italic" size="28.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+         <graphic>
+            <ImageView fitHeight="108.0" fitWidth="90.0" preserveRatio="true">
+               <image>
+                  <Image url="@Picture/outline_admin_panel_settings_white_48dp.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
    <effect>
       <Blend />

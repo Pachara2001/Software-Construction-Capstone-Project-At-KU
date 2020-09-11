@@ -13,7 +13,7 @@ public class Temporary {
         staffList = new ArrayList<>();
     }
     public void AddAdmin(){
-        while() {
+        while(true) {
             //read csv create adminAccount and add arraylist
             AdminAccount a = new AdminAccount("", "");
             adminList.add(a);
