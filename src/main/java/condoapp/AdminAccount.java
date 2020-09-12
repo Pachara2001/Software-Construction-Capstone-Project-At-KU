@@ -1,4 +1,4 @@
-package sample;
+package condoapp;
 
 import com.opencsv.CSVWriter;
 

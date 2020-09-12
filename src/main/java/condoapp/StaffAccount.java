@@ -1,4 +1,4 @@
-package sample;
+package condoapp;
 
 public class StaffAccount extends Account{
     private  String permission,dateAndTime,total;

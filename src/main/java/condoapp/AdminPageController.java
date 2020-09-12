@@ -1,4 +1,4 @@
-package sample;
+package condoapp;
 
 public class AdminPageController {
 }
