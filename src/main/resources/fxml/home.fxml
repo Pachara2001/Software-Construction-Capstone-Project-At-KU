@@ -15,10 +15,10 @@
    <children>
       <ImageView fitHeight="600.0" fitWidth="806.0" layoutX="-7.0" pickOnBounds="true" style="-fx-opacity: 0.3;">
          <image>
-            <Image url="@Picture/Block-44-Condo1.jpg" />
+            <Image url="@../Picture/Block-44-Condo1.jpg" />
          </image>
       </ImageView>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="470.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@Stylesheet/1.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="164.0">
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="470.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@../Stylesheet/1.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="164.0">
          <effect>
             <Reflection />
          </effect>
@@ -31,14 +31,14 @@
          <graphic>
             <ImageView fitHeight="108.0" fitWidth="90.0" preserveRatio="true">
                <image>
-                  <Image url="@Picture/outline_account_circle_white_48dp.png" />
+                  <Image url="@../Picture/outline_account_circle_white_48dp.png" />
                </image>
             </ImageView>
          </graphic>
       </Button>
       <ImageView fitHeight="54.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Picture/baseline_help_white_48dp.png" />
+            <Image url="@../Picture/baseline_help_white_48dp.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -56,7 +56,7 @@
             </Shadow>
          </effect>
       </Label>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@Stylesheet/1.css" text="ADMIN" textFill="WHITE">
+      <Button alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@../Stylesheet/1.css" text="ADMIN" textFill="WHITE">
          <effect>
             <Reflection />
          </effect>
@@ -69,7 +69,7 @@
          <graphic>
             <ImageView fitHeight="108.0" fitWidth="90.0" preserveRatio="true">
                <image>
-                  <Image url="@Picture/outline_admin_panel_settings_white_48dp.png" />
+                  <Image url="@../Picture/outline_admin_panel_settings_white_48dp.png" />
                </image>
             </ImageView>
          </graphic>

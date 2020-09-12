@@ -1,38 +1,41 @@
 package sample;
 
-import java.util.ArrayList;
+import com.opencsv.CSVWriter;
 
-public class AdminAccount {
+import java.io.FileWriter;
+import java.io.IOException;
 
-    private  String username,password;
+public class AdminAccount extends Account{
+
+
 
     public AdminAccount(String username,String password){
-        this.username=username;
-        this.password=password;
+        super(username,password);
     }
-    public void AddStaff(String username,String password){
-        //open staff.csv
-        //write username,password
-    }
-
-    public void ChangePassword(String password){
-        //open admin csv
-        //find username
-        //edit password
+    public void AddStaff(String username,String password) throws IOException {
+        CSVWriter writer = new CSVWriter(new FileWriter("src\\main\\resources\\staff.csv",true));
+        String[] a= {username,password,"1","date","0"};
+        writer.writeNext(a);
+        writer.close();
     }
 
-//    public ArrayList<String[]> ShowStaffList(){
-        //Arraylist<String[]> a=new.......
-        //String[] = csv.split
-        //arraylist.sort
 
-    //}
-    public void EditStaffPermission(String username){
-        //open staff csv
-        //find username
-        //edit active status
+
+
+    public void EditStaffPermission(StaffAccount staff){
+        if(staff.getPermission().equals("0")){
+            staff.setPermission("1");
+            staff.setTotal(0);}
+        else staff.setPermission("0");
     }
 
-    
 
+
+    @Override
+    public String toString() {
+        return "AdminAccount{" +
+                "username='" + getUsername() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                '}';
+    }
 }
