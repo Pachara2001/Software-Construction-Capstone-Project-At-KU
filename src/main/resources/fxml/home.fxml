@@ -11,14 +11,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: rgba(100,100,100);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="condoapp.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: rgba(100,100,100);" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="condoapp.HomeController">
    <children>
       <ImageView fitHeight="600.0" fitWidth="806.0" layoutX="-7.0" pickOnBounds="true" style="-fx-opacity: 0.3;">
          <image>
             <Image url="@../Picture/Block-44-Condo1.jpg" />
          </image>
       </ImageView>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="470.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@../Stylesheet/1.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="164.0">
+      <Button fx:id="staffBtn" alignment="CENTER" contentDisplay="TOP" layoutX="470.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleStaffBtn" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../Stylesheet/1.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="164.0">
          <effect>
             <Reflection />
          </effect>
@@ -56,7 +56,7 @@
             </Shadow>
          </effect>
       </Label>
-      <Button alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="224.0" mnemonicParsing="false" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" stylesheets="@../Stylesheet/1.css" text="ADMIN" textFill="WHITE">
+      <Button fx:id="adminBtn" alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleAdminBtn" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../Stylesheet/1.css" text="ADMIN" textFill="WHITE">
          <effect>
             <Reflection />
          </effect>

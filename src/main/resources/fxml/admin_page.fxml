@@ -5,7 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -16,28 +16,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="condoapp.AdminPageController">
   <tabs>
-    <Tab style="-fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold; -fx-background-color: rgba(150,150,150);" text="     HOME      ">
+    <Tab style="-fx-background-color: rgba(150,150,150); -fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold;" text="     HOME      ">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));">
                <children>
-                  <Label layoutX="565.0" layoutY="14.0" text="Welcome : Admin1" textFill="#f2f0f0">
+                  <Label layoutX="559.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font>
                   </Label>
-                  <TableView layoutY="138.0" prefHeight="200.0" prefWidth="766.0" style="-fx-background-color: rgba(130,130,130);" tableMenuButtonVisible="true">
+                  <TableView fx:id="staffListTable" layoutX="10.0" layoutY="138.0" prefHeight="295.0" prefWidth="398.0" style="-fx-background-color: rgba(130,130,130);">
                     <columns>
-                      <TableColumn prefWidth="134.0" style="-fx-background-color: rgb(100,100,100);" text="DATE" />
-                      <TableColumn prefWidth="131.0" style="-fx-background-color: rgb(120,120,120);" text="TIME" />
-                        <TableColumn prefWidth="250.0" style="-fx-background-color: rgb(100,100,100);" text="USERNAME" />
-                        <TableColumn prefWidth="250.0" style="-fx-background-color: rgb(120,120,120);" text="NAME" />
+                      <TableColumn fx:id="dateTimeCol" prefWidth="152.0" style="-fx-background-color: rgb(100,100,100);" text="DATE/TIME" />
+                        <TableColumn fx:id="usernameCol" editable="false" prefWidth="245.0" resizable="false" style="-fx-background-color: rgb(120,120,120);" text="USERNAME" />
                     </columns>
                   </TableView>
-                  <ScrollBar layoutX="766.0" layoutY="138.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="18.0" style="-fx-background-color: 0;" />
                   <PointLight color="CHARTREUSE" layoutX="37.0" layoutY="102.0" lightOn="true" />
-                  <ImageView fitHeight="67.0" fitWidth="76.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="HomeImg" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Picture/outline_home_white_48dp.png" />
                      </image>
@@ -45,6 +42,61 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
+                  <Label layoutX="142.0" layoutY="85.0" text="Staff's list" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="24.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="419.0" layoutY="74.0" orientation="VERTICAL" prefHeight="453.0" prefWidth="5.0" />
+                  <Label layoutX="470.0" layoutY="85.0" text="Selected staff's information" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fx:id="staffPicImageView" fitHeight="170.0" fitWidth="150.0" layoutX="537.0" layoutY="132.0" pickOnBounds="true" />
+                  <Label layoutX="456.0" layoutY="325.0" text="Name  :">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font></Label>
+                  <Label layoutX="456.0" layoutY="371.0" text="Permission :">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="453.0" layoutY="418.0" text="Attempts to access the system :">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="nameLabel" layoutX="554.0" layoutY="325.0" prefHeight="27.0" prefWidth="127.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="permissionLabel" layoutX="566.0" layoutY="371.0" prefHeight="27.0" prefWidth="116.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="attemptLabel" layoutX="730.0" layoutY="418.0" prefHeight="27.0" prefWidth="56.0">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="welcomeLabel" layoutX="698.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                     <font>
+                        <Font name="System Bold Italic" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="imageErrorLabel" layoutX="536.0" layoutY="215.0" prefHeight="27.0" prefWidth="156.0" textFill="#bf2d2d">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="searchImageSelectedStaffBtn" layoutX="699.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleSearchImageSelectedStaffBtn" stylesheets="@../Stylesheet/1.css" text="SEARCH" />
+                  <Button fx:id="editPermissionBtn" layoutX="698.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleEditPermissionBtn" stylesheets="@../Stylesheet/1.css" text="EDIT" />
+                  <Button fx:id="updateSelectedStaffBtn" layoutX="568.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleUpdateSelectedStaffBtn" stylesheets="@../Stylesheet/1.css" text="UPDATE" />
+                  <Button fx:id="refreshBtn" layoutX="173.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleRefreshBtn" stylesheets="@../Stylesheet/1.css" text="REFRESH" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -52,34 +104,34 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));">
                <children>
-                  <TextField layoutX="388.0" layoutY="132.0" />
-                  <Label layoutX="191.0" layoutY="138.0" text="NAME" textFill="#f8f8f8">
+                  <TextField fx:id="nameTextField" layoutX="391.0" layoutY="132.0" />
+                  <Label layoutX="191.0" layoutY="138.0" text="NAME :" textFill="#f8f8f8">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="388.0" layoutY="174.0" />
-                  <Label layoutX="191.0" layoutY="179.0" text="USERNAME" textFill="WHITE">
+                  <TextField fx:id="usernameTextField" layoutX="391.0" layoutY="174.0" />
+                  <Label layoutX="191.0" layoutY="179.0" text="USERNAME :" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="191.0" layoutY="223.0" text="PASSWORD" textFill="WHITE">
+                  <Label layoutX="193.0" layoutY="263.0" text="PASSWORD :" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="588.0" layoutY="258.0" mnemonicParsing="false" styleClass="button1" stylesheets="@../Stylesheet/1.css" text="CREATE" textFill="WHITE">
+                  <Button fx:id="createBtn" layoutX="502.0" layoutY="364.0" mnemonicParsing="false" onAction="#handleCreateBtn" stylesheets="@../Stylesheet/1.css" text="CREATE" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
                   </Button>
-                  <Label layoutX="388.0" layoutY="302.0" prefHeight="21.0" prefWidth="186.0" text="ERROR" textFill="WHITE">
+                  <Label fx:id="errorCreateAccountLabel" layoutX="388.0" layoutY="343.0" prefHeight="21.0" prefWidth="267.0" textFill="#bf2d2d">
                      <font>
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="67.0" fitWidth="76.0" layoutY="494.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="HomeImg1" fitHeight="67.0" fitWidth="76.0" layoutY="498.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Picture/outline_home_white_48dp.png" />
                      </image>
@@ -87,18 +139,34 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label layoutX="565.0" layoutY="14.0" text="Welcome : Admin1" textFill="#f2f0f0">
-                     <font>
-                        <Font name="System Bold Italic" size="25.0" />
-                     </font>
-                  </Label>
-                  <PasswordField layoutX="388.0" layoutY="216.0" />
-                  <Label layoutX="191.0" layoutY="263.0" text="CONFIRM PASSWORD" textFill="WHITE">
+                  <PasswordField fx:id="passwordTextField" layoutX="391.0" layoutY="256.0" />
+                  <Label layoutX="191.0" layoutY="309.0" text="CONFIRM PASSWORD :" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField layoutX="388.0" layoutY="258.0" />
+                  <PasswordField fx:id="confirmTextField" layoutX="391.0" layoutY="304.0" />
+                  <Label layoutX="559.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
+                     <font>
+                        <Font name="System Bold Italic" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="welcomeLabel1" layoutX="698.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                     <font>
+                        <Font name="System Bold Italic" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="191.0" layoutY="217.0" text="IMAGE :" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="pictureTextField" layoutX="391.0" layoutY="215.0" />
+                  <Button fx:id="searchImgBtn" layoutX="588.0" layoutY="215.0" mnemonicParsing="false" onAction="#handleSearchBtn" stylesheets="@../Stylesheet/1.css" text="SEARCH" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
       </content>
     </Tab>
@@ -106,29 +174,29 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));">
                <children>
-                  <Label layoutX="191.0" layoutY="136.0" text="USERNAME  " textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="136.0" text="USERNAME :  " textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="191.0" layoutY="163.0" text="PASSWORD " textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="163.0" text="PASSWORD :" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="319.0" layoutY="136.0" text="admindsfsg" textFill="WHITE">
+                  <Label fx:id="myUsernameLabel" layoutX="319.0" layoutY="136.0" text="admindsfsg" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="319.0" layoutY="163.0" text="admindsfsg" textFill="WHITE">
+                  <Label fx:id="myPasswordLabel" layoutX="319.0" layoutY="163.0" text="admindsfsg" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <PasswordField layoutX="352.0" layoutY="194.0" prefHeight="31.0" prefWidth="229.0" />
-                  <PasswordField layoutX="393.0" layoutY="235.0" />
-                  <Label layoutX="191.0" layoutY="196.0" text="NEW PASSWORD  " textFill="WHITE">
+                  <PasswordField fx:id="newPassTextField" layoutX="352.0" layoutY="194.0" prefHeight="31.0" prefWidth="229.0" />
+                  <PasswordField fx:id="confirmNewPassTextField" layoutX="393.0" layoutY="235.0" />
+                  <Label layoutX="191.0" layoutY="196.0" text="NEW PASSWORD :  " textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -138,17 +206,17 @@
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Button layoutX="580.0" layoutY="235.0" mnemonicParsing="false" styleClass="button1" stylesheets="@../Stylesheet/1.css" text="CHANGE" textFill="WHITE">
+                  <Button fx:id="changeBtn" layoutX="584.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleChangeBtn" stylesheets="@../Stylesheet/1.css" text="CHANGE" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Button>
-                  <Label layoutX="393.0" layoutY="273.0" text="ERROR" textFill="WHITE">
+                  <Label fx:id="errorMyAccountLabel" layoutX="393.0" layoutY="273.0" prefHeight="21.0" prefWidth="208.0" textFill="#bf2d2d">
                      <font>
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="67.0" fitWidth="76.0" layoutY="500.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="HomeImg2" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../Picture/outline_home_white_48dp.png" />
                      </image>
@@ -156,7 +224,12 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label layoutX="565.0" layoutY="14.0" text="Welcome : Admin1" textFill="#f2f0f0">
+                  <Label layoutX="559.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
+                     <font>
+                        <Font name="System Bold Italic" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="welcomeLabel11" layoutX="698.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font>

@@ -1,6 +1,17 @@
-
-
 .button {
+  -fx-background-color:  rgba(60,60,60); 
+  -fx-background-radius:  20;
+  -fx-cursor: hand;
+  -fx-color:rgb(0,0,0);	
+  -fx-font-weight: bold;
+  -fx-font-style: italic;
+ 
+}
+
+.button:hover {
+  -fx-background-color:  rgba(95,95,95);
+}
+.button1 {
   -fx-background-color:  rgba(60,60,60); 
   -fx-background-radius:  20;
   -fx-cursor: hand;
@@ -10,26 +21,15 @@
   -fx-font-size: 28;
 }
 
-.button:hover {
+.button1:hover {
   -fx-background-color:  rgba(95,95,95);
   -fx-font-size: 25;
  
 
 }
-.button1 {
-  -fx-background-color:  rgba(60,60,60); 
-  -fx-background-radius:  20;
-  -fx-cursor: hand;
-  -fx-color:rgb(0,0,0);	
-  -fx-font-weight: bold;
-  -fx-font-style: italic;
- 
-}
 
-.button1:hover {
-  -fx-background-color:  rgba(95,95,95);
 
  
 
-}
+
 

@@ -1,9 +1,8 @@
 package condoapp;
 
-import com.opencsv.CSVWriter;
 
-import java.io.FileWriter;
 import java.io.IOException;
+
 
 public class AdminAccount extends Account{
 
@@ -12,21 +11,25 @@ public class AdminAccount extends Account{
     public AdminAccount(String username,String password){
         super(username,password);
     }
-    public void AddStaff(String username,String password) throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter("src\\main\\resources\\staff.csv",true));
-        String[] a= {username,password,"1","date","0"};
-        writer.writeNext(a);
-        writer.close();
+
+
+    public String AddStaff(String username, String password,String name,String picturePath, AccountManagement staff) throws IOException {
+        for(StaffAccount s : staff.getStaffList()){
+            if(username.equalsIgnoreCase(s.getUsername())) return "This username already exists ";
+        }
+        StaffAccount newStaff = new StaffAccount(username,password,name,"Allowed","01/01/0001 00:00:01","0",picturePath);
+        staff.getStaffList().add(newStaff);
+        return "";
     }
 
 
 
 
     public void EditStaffPermission(StaffAccount staff){
-        if(staff.getPermission().equals("0")){
-            staff.setPermission("1");
-            staff.setTotal(0);}
-        else staff.setPermission("0");
+        if(staff.getPermission().equals("Not allowed")){
+            staff.setPermission("Allowed");
+            staff.setAttempt(0);}
+        else staff.setPermission("Not allowed");
     }
 
 

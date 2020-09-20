@@ -1,14 +1,13 @@
 package condoapp;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVWriter;
+import com.opencsv.*;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class AccountManagement {
     private ArrayList<AdminAccount> adminList;
@@ -25,7 +24,8 @@ public class AccountManagement {
         staffStr= new ArrayList<>();
     }
     public void AddAdmin() throws IOException, com.opencsv.exceptions.CsvValidationException {
-        CSVReader reader = new CSVReader(new FileReader("src\\main\\resources\\CSV file\\admin.csv"));
+        adminList.clear();
+        CSVReader reader = new CSVReader(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\admin.csv"));
         String [] admin= new  String [2];
         while((admin = reader.readNext())!=null) {
             AdminAccount ad = new AdminAccount(admin[0], admin[1]);
@@ -38,10 +38,10 @@ public class AccountManagement {
         for(AdminAccount checkAdmin : adminList){
             if(username.equals(checkAdmin.getUsername())&&password.equals(checkAdmin.getPassword())){
                 currentAdmin=checkAdmin;
-                return  "pass";}
-            if(username.equals(checkAdmin.getUsername())&&!(password.equals(checkAdmin.getPassword()))){return "wrong password ";}
+                return  "";}
+            if(username.equals(checkAdmin.getUsername())&&!(password.equals(checkAdmin.getPassword()))){return "Wrong password ";}
         }
-        return "wrong username";
+        return "Wrong username";
 
     }
 
@@ -50,7 +50,8 @@ public class AccountManagement {
     }
 
     public void UpdateAdmin() throws IOException{
-        CSVWriter writer = new CSVWriter(new FileWriter("src\\main\\resources\\CSV file\\admin.csv"));
+        adminStr.clear();
+        CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\admin.csv"));
         for(AdminAccount upAdmin : adminList){
             String[] q = {upAdmin.getUsername(),upAdmin.getPassword()};
             adminStr.add(q);
@@ -60,48 +61,58 @@ public class AccountManagement {
 
     }
     public void AddStaff() throws IOException, com.opencsv.exceptions.CsvValidationException {
-        CSVReader reader = new CSVReader(new FileReader("src\\main\\resources\\CSV file\\staff.csv"));
-        String [] staff= new  String [5];
+        staffList.clear();
+        CSVParser csvParser = new CSVParserBuilder().withEscapeChar('\0').build();
+        CSVReader reader = new CSVReaderBuilder(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\staff.csv")).withCSVParser(csvParser).build();
+        String [] staff= new  String[7];
         while((staff = reader.readNext())!=null) {
-            StaffAccount a = new StaffAccount(staff[0], staff[1],staff[2],staff[3], staff[4]);
+            StaffAccount a = new StaffAccount(staff[0], staff[1],staff[2],staff[3], staff[4],staff[5],staff[6]);
             staffList.add(a);
         }
-        System.out.println(staffList);
+
         reader.close();
     }
     public String CheckStaffAccount(String username,String password){
         for(StaffAccount a : staffList){
-            int total = Integer.valueOf(a.getTotal());
-            if(username.equals(a.getUsername())&&password.equals(a.getPassword())&&a.getPermission().equals("1")){
+            int total = Integer.valueOf(a.getAttempt());
+            if(username.equals(a.getUsername())&&password.equals(a.getPassword())&&a.getPermission().equals("Allowed")){
                 currentStaff=a;
-                SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                Date date = new Date();
-                currentStaff.setDateAndTime(formatter.format(date));
-                return  "pass";}
+                currentStaff.setDateAndTime(LocalDateTime.now());
+                return  "";}
             else if(username.equals(a.getUsername())&&password.equals(a.getPassword())){
                 total+=1;
-                a.setTotal(total);
-
-                return "you don't have permission";
+                a.setAttempt(total);
+                return "You don't have permission to access system.";
             }
-            if(username.equals(a.getUsername())&&!(password.equals(a.getPassword()))){return "wrong password ";}
+            if(username.equals(a.getUsername())&&!(password.equals(a.getPassword()))){return "Wrong password ";}
         }
-        return "wrong username";
+        return "Wrong username";
     }
 
     public StaffAccount getCurrentStaff() {
         return currentStaff;
     }
 
+
     public void UpdateStaff() throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter("src\\main\\resources\\CSV file\\staff.csv"));
+        staffStr.clear();
+        CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\staff.csv"));
         for(StaffAccount staffUp : staffList){
-            String[] q = {staffUp.getUsername(),staffUp.getPassword(),staffUp.getPermission(),staffUp.getDateAndTime(),staffUp.getTotal()};
+            LocalDateTime time = staffUp.getDateAndTime();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            String formattedDateTime = time.format(formatter);
+            String[] q = {staffUp.getUsername(),staffUp.getPassword(),staffUp.getName(),staffUp.getPermission(), formattedDateTime,staffUp.getAttempt(),staffUp.getPicturePath()};
             staffStr.add(q);
         }
         writer.writeAll(staffStr);
         writer.close();
     }
 
+    public void setStaffList(ArrayList<StaffAccount> staffList) {
+        this.staffList = staffList;
+    }
 
+    public ArrayList<StaffAccount> getStaffList() {
+        return staffList;
+    }
 }
