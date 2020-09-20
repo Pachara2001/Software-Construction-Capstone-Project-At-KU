@@ -15,7 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -23,7 +22,6 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class AdminPageController {
@@ -54,7 +52,7 @@ public class AdminPageController {
                 updateSelectedStaffBtn.setDisable(true);
                 searchImageSelectedStaffBtn.setDisable(true);
                 editPermissionBtn.setDisable(true);
-                accountManage.getStaffList().sort(new SortByDataAndTime());
+                accountManage.getStaffList().sort(new SortByDateAndTime());
                 staffObservableList = FXCollections.observableArrayList(accountManage.getStaffList());
                 dateTimeCol.setCellValueFactory(new PropertyValueFactory<StaffAccount,String>("dateAndTimeStr"));
                 usernameCol.setCellValueFactory(new PropertyValueFactory<StaffAccount,String>("username"));

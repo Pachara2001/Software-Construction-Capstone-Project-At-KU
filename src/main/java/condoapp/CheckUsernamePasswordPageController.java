@@ -58,8 +58,10 @@ public class CheckUsernamePasswordPageController {
                 stage.setScene(new Scene(loader.load(),800,600));
                 StaffPageController staff = loader.getController();
                 staff.setAccount(accountManagement);
+                accountManagement.UpdateStaff();
                 stage.show();
             }
+            else accountManagement.UpdateStaff();
     }
     }
 
