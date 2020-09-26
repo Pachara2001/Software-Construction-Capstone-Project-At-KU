@@ -1,4 +1,4 @@
-package condoapp;
+package condoapp.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

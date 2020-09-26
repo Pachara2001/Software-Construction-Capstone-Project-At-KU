@@ -1,6 +1,7 @@
-package condoapp;
+package condoapp.models;
 
 import com.opencsv.*;
+import com.opencsv.exceptions.CsvValidationException;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -23,10 +24,10 @@ public class AccountManagement {
         adminStr = new ArrayList<>();
         staffStr= new ArrayList<>();
     }
-    public void AddAdmin() throws IOException, com.opencsv.exceptions.CsvValidationException {
+    public void addAdminList() throws IOException, com.opencsv.exceptions.CsvValidationException {
         adminList.clear();
         CSVReader reader = new CSVReader(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\admin.csv"));
-        String [] admin= new  String [2];
+        String [] admin;
         while((admin = reader.readNext())!=null) {
             AdminAccount ad = new AdminAccount(admin[0], admin[1]);
             adminList.add(ad);
@@ -34,7 +35,7 @@ public class AccountManagement {
         }
         reader.close();
     }
-    public String CheckAdminAccount(String username,String password){
+    public String checkAdminAccount(String username, String password){
         for(AdminAccount checkAdmin : adminList){
             if(username.equals(checkAdmin.getUsername())&&password.equals(checkAdmin.getPassword())){
                 currentAdmin=checkAdmin;
@@ -49,7 +50,7 @@ public class AccountManagement {
         return currentAdmin;
     }
 
-    public void UpdateAdmin() throws IOException{
+    public void updateAdminCsv() throws IOException{
         adminStr.clear();
         CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\admin.csv"));
         for(AdminAccount upAdmin : adminList){
@@ -60,11 +61,11 @@ public class AccountManagement {
         writer.close();
 
     }
-    public void AddStaff() throws IOException, com.opencsv.exceptions.CsvValidationException {
+    public void addStaffList() throws IOException, CsvValidationException {
         staffList.clear();
         CSVParser csvParser = new CSVParserBuilder().withEscapeChar('\0').build();
         CSVReader reader = new CSVReaderBuilder(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\staff.csv")).withCSVParser(csvParser).build();
-        String [] staff= new  String[7];
+        String [] staff;
         while((staff = reader.readNext())!=null) {
             StaffAccount a = new StaffAccount(staff[0], staff[1],staff[2],staff[3], staff[4],staff[5],staff[6]);
             staffList.add(a);
@@ -72,12 +73,14 @@ public class AccountManagement {
 
         reader.close();
     }
-    public String CheckStaffAccount(String username,String password){
+    public String checkStaffAccount(String username, String password){
         for(StaffAccount a : staffList){
             int total = Integer.valueOf(a.getAttempt());
             if(username.equals(a.getUsername())&&password.equals(a.getPassword())&&a.getPermission().equals("Allowed")){
                 currentStaff=a;
-                currentStaff.setDateAndTime(LocalDateTime.now());
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                String formattedDateTime = LocalDateTime.now().format(formatter);
+                currentStaff.setDateAndTimeStr(formattedDateTime);
                 return  "";}
             else if(username.equals(a.getUsername())&&password.equals(a.getPassword())){
                 total+=1;
@@ -94,14 +97,12 @@ public class AccountManagement {
     }
 
 
-    public void UpdateStaff() throws IOException {
+    public void updateStaffCsv() throws IOException {
         staffStr.clear();
         CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\staff.csv"));
         for(StaffAccount staffUp : staffList){
-            LocalDateTime time = staffUp.getDateAndTime();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-            String formattedDateTime = time.format(formatter);
-            String[] q = {staffUp.getUsername(),staffUp.getPassword(),staffUp.getName(),staffUp.getPermission(), formattedDateTime,staffUp.getAttempt(),staffUp.getPicturePath()};
+
+            String[] q = {staffUp.getUsername(),staffUp.getPassword(),staffUp.getName(),staffUp.getPermission(), staffUp.getDateAndTimeStr(),staffUp.getAttempt(),staffUp.getPicturePath()};
             staffStr.add(q);
         }
         writer.writeAll(staffStr);

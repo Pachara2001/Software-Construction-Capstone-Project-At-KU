@@ -1,4 +1,4 @@
-package condoapp;
+package condoapp.models;
 
 public class Account {
     private  String username,password;

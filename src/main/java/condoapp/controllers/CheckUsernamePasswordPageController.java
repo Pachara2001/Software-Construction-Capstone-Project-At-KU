@@ -1,7 +1,8 @@
-package condoapp;
+package condoapp.controllers;
 
 import com.opencsv.exceptions.CsvValidationException;
 
+import condoapp.models.AccountManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,13 +31,12 @@ public class CheckUsernamePasswordPageController {
     @FXML
     public  void initialize() throws IOException, CsvValidationException {
         accountManagement = new AccountManagement();
-        accountManagement.AddStaff();
-        accountManagement.AddAdmin();
+        accountManagement.addStaffList();
+        accountManagement.addAdminList();
     }
     @FXML public void handleOkBtn(ActionEvent event) throws IOException {
-        System.out.println(stat);
         if(stat.equals("admin")){
-            String str =accountManagement.CheckAdminAccount(usernameText.getText(),passwordField.getText());
+            String str =accountManagement.checkAdminAccount(usernameText.getText(),passwordField.getText());
             errorLabel.setText(str);
             if(str.equals("")){
                 Button b = (Button)event.getSource();
@@ -49,7 +49,7 @@ public class CheckUsernamePasswordPageController {
             }
         }
         else {
-            String str =accountManagement.CheckStaffAccount(usernameText.getText(),passwordField.getText());
+            String str =accountManagement.checkStaffAccount(usernameText.getText(),passwordField.getText());
             errorLabel.setText(str);
             if(str.equals("")){
                 Button b = (Button)event.getSource();
@@ -58,10 +58,10 @@ public class CheckUsernamePasswordPageController {
                 stage.setScene(new Scene(loader.load(),800,600));
                 StaffPageController staff = loader.getController();
                 staff.setAccount(accountManagement);
-                accountManagement.UpdateStaff();
+                accountManagement.updateStaffCsv();
                 stage.show();
             }
-            else accountManagement.UpdateStaff();
+            else accountManagement.updateStaffCsv();
     }
     }
 

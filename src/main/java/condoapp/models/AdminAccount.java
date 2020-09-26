@@ -1,10 +1,11 @@
-package condoapp;
+package condoapp.models;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 
-public class AdminAccount extends Account{
+public class AdminAccount extends Account {
 
 
 
@@ -13,19 +14,19 @@ public class AdminAccount extends Account{
     }
 
 
-    public String AddStaff(String username, String password,String name,String picturePath, AccountManagement staff) throws IOException {
-        for(StaffAccount s : staff.getStaffList()){
+    public String addStaff(String username, String password, String name, String picturePath, ArrayList<StaffAccount> staff) throws IOException {
+        for(StaffAccount s : staff){
             if(username.equalsIgnoreCase(s.getUsername())) return "This username already exists ";
         }
         StaffAccount newStaff = new StaffAccount(username,password,name,"Allowed","01/01/0001 00:00:01","0",picturePath);
-        staff.getStaffList().add(newStaff);
+        staff.add(newStaff);
         return "";
     }
 
 
 
 
-    public void EditStaffPermission(StaffAccount staff){
+    public void editStaffPermission(StaffAccount staff){
         if(staff.getPermission().equals("Not allowed")){
             staff.setPermission("Allowed");
             staff.setAttempt(0);}

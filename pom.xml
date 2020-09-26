@@ -10,7 +10,7 @@
     <properties>
         <out.folder>6210401295</out.folder>
         <out.filename>6210401295-jar</out.filename>
-        <project.mainClass>condoapp.Main</project.mainClass>
+        <project.mainClass>condoapp.controllers.Main</project.mainClass>
     </properties>
 
     <dependencies>

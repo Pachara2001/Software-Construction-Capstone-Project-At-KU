@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="condoapp.AdminPageController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="condoapp.controllers.AdminPageController">
   <tabs>
     <Tab style="-fx-background-color: rgba(150,150,150); -fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold;" text="     HOME      ">
       <content>
@@ -100,7 +100,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab style="-fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold; -fx-background-color: rgba(150,150,150);" text="CREATE ACCOUNT">
+    <Tab style="-fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold; -fx-background-color: rgba(150,150,150);" text="CREATE STAFF ACCOUNT">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));">
                <children>

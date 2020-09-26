@@ -1,4 +1,4 @@
-package condoapp;
+package condoapp.controllers;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

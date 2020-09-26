@@ -1,6 +1,9 @@
-package condoapp;
+package condoapp.controllers;
 
 import com.opencsv.exceptions.CsvValidationException;
+import condoapp.models.AccountManagement;
+import condoapp.models.SortByDateAndTime;
+import condoapp.models.StaffAccount;
 import javafx.application.Platform;
 
 import javafx.collections.FXCollections;
@@ -16,6 +19,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -60,7 +64,7 @@ public class AdminPageController {
                 staffListTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         StaffAccount a = (StaffAccount) newValue;
-                        ShowSelectedStaff(a);
+                        showSelectedStaff(a);
                     }
                 });
 
@@ -75,17 +79,23 @@ public class AdminPageController {
         }
         else {
             if(passwordTextField.getText().equals(confirmTextField.getText())){
-                errorCreateAccountLabel.setText(accountManage.getCurrentAdmin().AddStaff(usernameTextField.getText(),passwordTextField.getText(),nameTextField.getText(),pictureTextField.getText(),accountManage));
-                accountManage.UpdateStaff();
+                errorCreateAccountLabel.setText(accountManage.getCurrentAdmin().addStaff(usernameTextField.getText(),passwordTextField.getText(),nameTextField.getText(),pictureTextField.getText(),accountManage.getStaffList()));
+                accountManage.updateStaffCsv();
+                pictureTextField.setText("");
+                nameTextField.setText("");
+                usernameTextField.setText("");
+                passwordTextField.setText("");
+                confirmTextField.setText("");
+                if(errorCreateAccountLabel.getText().equals("")) {
+                    errorCreateAccountLabel.setText("Success !!");
+                    errorCreateAccountLabel.setTextFill(Color.web("#44c55a"));
+                }
             }
             else{
             errorCreateAccountLabel.setText("Passwords do not match");}
         }
-        pictureTextField.setText("");
-        nameTextField.setText("");
-        usernameTextField.setText("");
-        passwordTextField.setText("");
-        confirmTextField.setText("");
+
+
 
     }
 
@@ -93,7 +103,9 @@ public class AdminPageController {
            if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
                accountManage.getCurrentAdmin().setPassword(newPassTextField.getText());
                myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
-               accountManage.UpdateAdmin();
+               accountManage.updateAdminCsv();
+               errorMyAccountLabel.setText("Success !!");
+               errorMyAccountLabel.setTextFill(Color.web("#44c55a"));
            }
            else {errorMyAccountLabel.setText("Passwords do not match");}
         newPassTextField.setText("");
@@ -115,7 +127,7 @@ public class AdminPageController {
         this.accountManage = accountManage;
     }
 
-  private void ShowSelectedStaff(StaffAccount staff){
+  private void showSelectedStaff(StaffAccount staff){
         staffPicImageView.setImage(null);
         selectedStaff=staff;
         nameLabel.setText(staff.getName());
@@ -152,14 +164,13 @@ public class AdminPageController {
     }
 
     @FXML public void handleEditPermissionBtn(ActionEvent event){
-        accountManage.getCurrentAdmin().EditStaffPermission(selectedStaff);
+        accountManage.getCurrentAdmin().editStaffPermission(selectedStaff);
         permissionLabel.setText(selectedStaff.getPermission());
     }
 
     @FXML public void handleUpdateSelectedStaffBtn(ActionEvent event) throws IOException {
-        ArrayList<StaffAccount> st = new ArrayList<StaffAccount>(staffListTable.getItems());
-        accountManage.setStaffList(st);
-        accountManage.UpdateStaff();
+
+        accountManage.updateStaffCsv();
         staffPicImageView.setImage(null);
         nameLabel.setText("");
         permissionLabel.setText("");
