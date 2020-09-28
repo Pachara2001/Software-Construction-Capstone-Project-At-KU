@@ -1,6 +1,7 @@
 package condoapp.controllers;
 
 import com.opencsv.exceptions.CsvValidationException;
+import condoapp.ReadWriteAccountCsv;
 import condoapp.models.AccountManagement;
 import condoapp.models.SortByDateAndTime;
 import condoapp.models.StaffAccount;
@@ -32,6 +33,7 @@ public class AdminPageController {
     private AccountManagement accountManage;
     private StaffAccount selectedStaff;
     private ObservableList<StaffAccount> staffObservableList;
+    private ReadWriteAccountCsv readWriteAccountCsv;
     @FXML private Label welcomeLabel,welcomeLabel1,welcomeLabel11,nameLabel,permissionLabel,attemptLabel,imageErrorLabel,errorCreateAccountLabel,errorMyAccountLabel,myPasswordLabel,myUsernameLabel;
     @FXML private PasswordField confirmNewPassTextField,confirmTextField,newPassTextField,passwordTextField;
     @FXML private ImageView staffPicImageView;
@@ -45,6 +47,7 @@ public class AdminPageController {
 
 
     public  void initialize() throws IOException, CsvValidationException {
+        readWriteAccountCsv = new ReadWriteAccountCsv();
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -80,7 +83,7 @@ public class AdminPageController {
         else {
             if(passwordTextField.getText().equals(confirmTextField.getText())){
                 errorCreateAccountLabel.setText(accountManage.getCurrentAdmin().addStaff(usernameTextField.getText(),passwordTextField.getText(),nameTextField.getText(),pictureTextField.getText(),accountManage.getStaffList()));
-                accountManage.updateStaffCsv();
+                readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
                 pictureTextField.setText("");
                 nameTextField.setText("");
                 usernameTextField.setText("");
@@ -103,7 +106,7 @@ public class AdminPageController {
            if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
                accountManage.getCurrentAdmin().setPassword(newPassTextField.getText());
                myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
-               accountManage.updateAdminCsv();
+               readWriteAccountCsv.updateAdminCsv(accountManage.getAdminList());
                errorMyAccountLabel.setText("Success !!");
                errorMyAccountLabel.setTextFill(Color.web("#44c55a"));
            }
@@ -170,7 +173,7 @@ public class AdminPageController {
 
     @FXML public void handleUpdateSelectedStaffBtn(ActionEvent event) throws IOException {
 
-        accountManage.updateStaffCsv();
+        readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
         staffPicImageView.setImage(null);
         nameLabel.setText("");
         permissionLabel.setText("");

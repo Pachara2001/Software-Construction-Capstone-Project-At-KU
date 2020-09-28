@@ -20,7 +20,7 @@
   <tabs>
     <Tab style="-fx-background-color: rgba(150,150,150); -fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold;" text="     HOME      ">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
                   <Label layoutX="559.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
                      <font>
@@ -102,7 +102,7 @@
     </Tab>
     <Tab style="-fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold; -fx-background-color: rgba(150,150,150);" text="CREATE STAFF ACCOUNT">
       <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));">
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
                   <TextField fx:id="nameTextField" layoutX="391.0" layoutY="132.0" />
                   <Label layoutX="191.0" layoutY="138.0" text="NAME :" textFill="#f8f8f8">
@@ -172,7 +172,7 @@
     </Tab>
       <Tab style="-fx-background-radius: 20; -fx-font-style: italic; -fx-font-weight: bold; -fx-background-color: rgba(150,150,150);" text="MY ACCOUNT">
          <content>
-            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));">
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
                   <Label layoutX="191.0" layoutY="136.0" text="USERNAME :  " textFill="WHITE">
                      <font>

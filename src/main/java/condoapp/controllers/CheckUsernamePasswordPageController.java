@@ -2,6 +2,7 @@ package condoapp.controllers;
 
 import com.opencsv.exceptions.CsvValidationException;
 
+import condoapp.ReadWriteAccountCsv;
 import condoapp.models.AccountManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +20,8 @@ import java.io.IOException;
 
 public class CheckUsernamePasswordPageController {
     private String stat;
-    private AccountManagement accountManagement;
+    private AccountManagement accountManage;
+    private ReadWriteAccountCsv readWriteAccountCsv;
     @FXML private Button okBtn;
     @FXML private ImageView homeImg;
     @FXML private PasswordField passwordField;
@@ -30,13 +32,14 @@ public class CheckUsernamePasswordPageController {
 
     @FXML
     public  void initialize() throws IOException, CsvValidationException {
-        accountManagement = new AccountManagement();
-        accountManagement.addStaffList();
-        accountManagement.addAdminList();
+        readWriteAccountCsv = new ReadWriteAccountCsv();
+        accountManage = new AccountManagement();
+        readWriteAccountCsv.addStaffList(accountManage.getStaffList());
+        readWriteAccountCsv.addAdminList(accountManage.getAdminList());
     }
     @FXML public void handleOkBtn(ActionEvent event) throws IOException {
         if(stat.equals("admin")){
-            String str =accountManagement.checkAdminAccount(usernameText.getText(),passwordField.getText());
+            String str = accountManage.checkAdminAccount(usernameText.getText(),passwordField.getText());
             errorLabel.setText(str);
             if(str.equals("")){
                 Button b = (Button)event.getSource();
@@ -44,12 +47,12 @@ public class CheckUsernamePasswordPageController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin_page.fxml"));
                 stage.setScene(new Scene(loader.load(),800,600));
                 AdminPageController admin = loader.getController();
-                admin.setAccountManage(accountManagement);
+                admin.setAccountManage(accountManage);
                 stage.show();
             }
         }
         else {
-            String str =accountManagement.checkStaffAccount(usernameText.getText(),passwordField.getText());
+            String str = accountManage.checkStaffAccount(usernameText.getText(),passwordField.getText());
             errorLabel.setText(str);
             if(str.equals("")){
                 Button b = (Button)event.getSource();
@@ -57,11 +60,11 @@ public class CheckUsernamePasswordPageController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/staff_page.fxml"));
                 stage.setScene(new Scene(loader.load(),800,600));
                 StaffPageController staff = loader.getController();
-                staff.setAccount(accountManagement);
-                accountManagement.updateStaffCsv();
+                staff.setAccount(accountManage);
+                readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
                 stage.show();
             }
-            else accountManagement.updateStaffCsv();
+            else readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
     }
     }
 

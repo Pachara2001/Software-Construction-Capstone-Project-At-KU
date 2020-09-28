@@ -1,11 +1,5 @@
 package condoapp.models;
 
-import com.opencsv.*;
-import com.opencsv.exceptions.CsvValidationException;
-
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -13,7 +7,7 @@ import java.util.ArrayList;
 public class AccountManagement {
     private ArrayList<AdminAccount> adminList;
     private AdminAccount currentAdmin;
-    private ArrayList<String[]> adminStr,staffStr;
+
     private ArrayList<StaffAccount> staffList;
     private StaffAccount currentStaff;
 
@@ -21,20 +15,8 @@ public class AccountManagement {
     public AccountManagement(){
         adminList = new ArrayList<>();
         staffList = new ArrayList<>();
-        adminStr = new ArrayList<>();
-        staffStr= new ArrayList<>();
     }
-    public void addAdminList() throws IOException, com.opencsv.exceptions.CsvValidationException {
-        adminList.clear();
-        CSVReader reader = new CSVReader(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\admin.csv"));
-        String [] admin;
-        while((admin = reader.readNext())!=null) {
-            AdminAccount ad = new AdminAccount(admin[0], admin[1]);
-            adminList.add(ad);
 
-        }
-        reader.close();
-    }
     public String checkAdminAccount(String username, String password){
         for(AdminAccount checkAdmin : adminList){
             if(username.equals(checkAdmin.getUsername())&&password.equals(checkAdmin.getPassword())){
@@ -50,29 +32,8 @@ public class AccountManagement {
         return currentAdmin;
     }
 
-    public void updateAdminCsv() throws IOException{
-        adminStr.clear();
-        CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\admin.csv"));
-        for(AdminAccount upAdmin : adminList){
-            String[] q = {upAdmin.getUsername(),upAdmin.getPassword()};
-            adminStr.add(q);
-        }
-        writer.writeAll(adminStr);
-        writer.close();
 
-    }
-    public void addStaffList() throws IOException, CsvValidationException {
-        staffList.clear();
-        CSVParser csvParser = new CSVParserBuilder().withEscapeChar('\0').build();
-        CSVReader reader = new CSVReaderBuilder(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\staff.csv")).withCSVParser(csvParser).build();
-        String [] staff;
-        while((staff = reader.readNext())!=null) {
-            StaffAccount a = new StaffAccount(staff[0], staff[1],staff[2],staff[3], staff[4],staff[5],staff[6]);
-            staffList.add(a);
-        }
 
-        reader.close();
-    }
     public String checkStaffAccount(String username, String password){
         for(StaffAccount a : staffList){
             int total = Integer.valueOf(a.getAttempt());
@@ -96,23 +57,7 @@ public class AccountManagement {
         return currentStaff;
     }
 
-
-    public void updateStaffCsv() throws IOException {
-        staffStr.clear();
-        CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\staff.csv"));
-        for(StaffAccount staffUp : staffList){
-
-            String[] q = {staffUp.getUsername(),staffUp.getPassword(),staffUp.getName(),staffUp.getPermission(), staffUp.getDateAndTimeStr(),staffUp.getAttempt(),staffUp.getPicturePath()};
-            staffStr.add(q);
-        }
-        writer.writeAll(staffStr);
-        writer.close();
-    }
-
-    public void setStaffList(ArrayList<StaffAccount> staffList) {
-        this.staffList = staffList;
-    }
-
+    public ArrayList<AdminAccount> getAdminList() { return adminList; }
     public ArrayList<StaffAccount> getStaffList() {
         return staffList;
     }
