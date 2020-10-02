@@ -142,11 +142,12 @@ public class AdminPageController {
                 target = FileSystems.getDefault().getPath(destDir.getAbsolutePath()+System.getProperty("file.separator")+selectedFile.getName());
 
                 Files.copy(selectedFile.toPath(), target, StandardCopyOption.REPLACE_EXISTING );
+                pictureTextField.setText(destDir.getName()+File.separator+selectedFile.getName());
 
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            pictureTextField.setText(destDir.getName()+File.separator+selectedFile.getName());
+
 
 
         }
@@ -157,6 +158,7 @@ public class AdminPageController {
 
   private void showSelectedStaff(StaffAccount staff){
         staffPicImageView.setImage(null);
+        imageErrorLabel.setText(null);
         selectedStaff=staff;
         nameLabel.setText(staff.getName());
         permissionLabel.setText(staff.getPermission());
@@ -164,34 +166,64 @@ public class AdminPageController {
       File jarDir = null;
       File codeDir = null;
       try {
-          jarDir = new File(Main.class.getProtectionDomain()
-                  .getCodeSource().getLocation()
-                  .toURI().getPath());
+          jarDir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
           codeDir = jarDir.getParentFile();
           String path = codeDir.toString() + File.separator + selectedStaff.getPicturePath();
           File uploadFile = new File(path);
-          staffPicImageView.setImage(new Image(uploadFile.toURI().toString()));}
-        catch (URISyntaxException e) {
-          imageErrorLabel.setText("Image not found!!");
+          staffPicImageView.setImage(new Image(uploadFile.toURI().toString()));
+          if(!uploadFile.exists()){
+              imageErrorLabel.setText("Image not found!!");
+          }
+      }
+      catch (URISyntaxException e) {
+          e.printStackTrace();
       }
       updateSelectedStaffBtn.setDisable(false);
       searchImageSelectedStaffBtn.setDisable(false);
       editPermissionBtn.setDisable(false);
     }
-    @FXML public void handleSearchImageSelectedStaffBtn(ActionEvent event) throws FileNotFoundException {
+    @FXML public void handleSearchImageSelectedStaffBtn(ActionEvent event) {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png")
         );
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile!=null){
-            String imagePath=selectedFile.getAbsolutePath();
-            selectedStaff.setPicturePath(imagePath);
-            InputStream stream = new FileInputStream(imagePath);
-            Image image = new Image(stream);
-            staffPicImageView.setImage(image);
             imageErrorLabel.setText("");
+            File destDir = null;
+            try {
+
+                destDir = new File("images");
+                destDir.mkdirs();
+
+                Path target = FileSystems.getDefault().getPath(destDir.getAbsolutePath()+System.getProperty("file.separator")+selectedFile.getName());
+
+                Files.copy(selectedFile.toPath(), target, StandardCopyOption.REPLACE_EXISTING );
+                selectedStaff.setPicturePath(destDir.getName()+File.separator+selectedFile.getName());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            File jarDir = null;
+            File codeDir = null;
+            try {
+                jarDir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+                codeDir = jarDir.getParentFile();
+                String path = codeDir.toString() + File.separator + selectedStaff.getPicturePath();
+                File uploadFile = new File(path);
+                staffPicImageView.setImage(new Image(uploadFile.toURI().toString()));}
+            catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
+
         }
+
+
+
+
+
+
     }
 
     @FXML public void handleEditPermissionBtn(ActionEvent event){
