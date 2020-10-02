@@ -1,4 +1,4 @@
-package condoapp;
+package condoapp.service;
 
 import com.opencsv.*;
 import com.opencsv.exceptions.CsvValidationException;
@@ -6,16 +6,56 @@ import condoapp.models.Document;
 import condoapp.models.Item;
 import condoapp.models.Parcel;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ReadWriteItemCsv {
+    private String dir;
+    private String itemCsvFilePath;
+    private String receivedItemCsvFilePath;
+    private String itemFileName;
+    private String receivedItemFileName;
+
+    public ReadWriteItemCsv(String dir ,String itemFileName , String receivedItemFileName){
+        this.dir=dir;
+        this.itemFileName=itemFileName;
+        this.receivedItemFileName =receivedItemFileName;
+        itemCsvFilePath = (dir+ File.separator+itemFileName);
+        receivedItemCsvFilePath = (dir+File.separator+receivedItemFileName);
+        checkFilePath();
+    }
+
+    private void checkFilePath() {
+        File file = new File(dir);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        file = new File(itemCsvFilePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.err.println("Cannot create " + itemFileName);
+            }
+        }
+
+        file = new File(receivedItemCsvFilePath);
+        if (!file.exists()) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.err.println("Cannot create " + receivedItemFileName);
+            }
+        }
+    }
     public void addItemList(ArrayList<Item> itemList) throws IOException, CsvValidationException {
         itemList.clear();
         CSVParser csvParser = new CSVParserBuilder().withEscapeChar('\0').build();
-        CSVReader reader = new CSVReaderBuilder(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\items.csv")).withCSVParser(csvParser).build();
+        CSVReader reader = new CSVReaderBuilder(new FileReader(itemCsvFilePath)).withCSVParser(csvParser).build();
         String [] items;
         while((items = reader.readNext())!=null) {
 
@@ -37,7 +77,7 @@ public class ReadWriteItemCsv {
     public void updateItemCsv(ArrayList<Item> itemList) throws IOException {
         ArrayList <String []> itemStr = new ArrayList<>();
         itemStr.clear();
-        CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\item.csv"));
+        CSVWriter writer = new CSVWriter(new FileWriter(itemCsvFilePath));
         for(Item itemUp : itemList){
 
             String[] q = null;
@@ -58,7 +98,7 @@ public class ReadWriteItemCsv {
     public void addReceivedItemList(ArrayList<Item> receivedItemList) throws IOException, CsvValidationException {
         receivedItemList.clear();
         CSVParser csvParser = new CSVParserBuilder().withEscapeChar('\0').build();
-        CSVReader reader = new CSVReaderBuilder(new FileReader("E:\\work\\Lab SW\\Project\\CSV file\\itemsOut.csv")).withCSVParser(csvParser).build();
+        CSVReader reader = new CSVReaderBuilder(new FileReader(receivedItemCsvFilePath)).withCSVParser(csvParser).build();
         String [] items;
         while((items = reader.readNext())!=null) {
 
@@ -81,7 +121,7 @@ public class ReadWriteItemCsv {
     public void updateReceivedItemCsv(ArrayList<Item> receivedItemList) throws IOException {
         ArrayList<String []> receivedItemStr = new ArrayList<>();
         receivedItemStr.clear();
-        CSVWriter writer = new CSVWriter(new FileWriter("E:\\work\\Lab SW\\Project\\CSV file\\receivedItem.csv"));
+        CSVWriter writer = new CSVWriter(new FileWriter(receivedItemCsvFilePath));
         for(Item itemUp : receivedItemList){
 
             String[] q = null;

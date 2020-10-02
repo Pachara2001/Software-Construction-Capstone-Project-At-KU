@@ -11,14 +11,15 @@ import java.util.ArrayList;
 
 public class RoomManagement {
     private ArrayList<Room> roomList;
-    private ArrayList<String[]> roomStr;
+
 
 
     public RoomManagement() {
         roomList= new ArrayList<>();
-        roomStr=new ArrayList<>();
+
     }
 
-    //ยังไม่เสร็จ
-
+    public ArrayList<Room> getRoomList() {
+        return roomList;
+    }
 }

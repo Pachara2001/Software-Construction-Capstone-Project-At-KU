@@ -13,6 +13,19 @@ public class Room {
         this.resident2 = resident2;
     }
 
+    public boolean isRoomNoMatch(String roomNo){
+        if(this.roomNo.equals(roomNo)) return true;
+        return false;
+    }
+
+    public void setResident1(String resident1) {
+        this.resident1 = resident1;
+    }
+
+    public void setResident2(String resident2) {
+        this.resident2 = resident2;
+    }
+
     public String getRoomNo() {
         return roomNo;
     }

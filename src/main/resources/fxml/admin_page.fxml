@@ -96,7 +96,6 @@
                   <Button fx:id="searchImageSelectedStaffBtn" layoutX="699.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleSearchImageSelectedStaffBtn" stylesheets="@../Stylesheet/1.css" text="SEARCH" />
                   <Button fx:id="editPermissionBtn" layoutX="698.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleEditPermissionBtn" stylesheets="@../Stylesheet/1.css" text="EDIT" />
                   <Button fx:id="updateSelectedStaffBtn" layoutX="568.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleUpdateSelectedStaffBtn" stylesheets="@../Stylesheet/1.css" text="UPDATE" />
-                  <Button fx:id="refreshBtn" layoutX="173.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleRefreshBtn" stylesheets="@../Stylesheet/1.css" text="REFRESH" />
                </children></AnchorPane>
       </content>
     </Tab>

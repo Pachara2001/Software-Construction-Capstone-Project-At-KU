@@ -2,7 +2,7 @@ package condoapp.controllers;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import condoapp.ReadWriteAccountCsv;
+import condoapp.service.ReadWriteAccountCsv;
 import condoapp.models.AccountManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,7 +32,7 @@ public class CheckUsernamePasswordPageController {
 
     @FXML
     public  void initialize() throws IOException, CsvValidationException {
-        readWriteAccountCsv = new ReadWriteAccountCsv();
+        readWriteAccountCsv = new ReadWriteAccountCsv("csv","admin.csv","staff.csv");
         accountManage = new AccountManagement();
         readWriteAccountCsv.addStaffList(accountManage.getStaffList());
         readWriteAccountCsv.addAdminList(accountManage.getAdminList());
@@ -48,6 +48,7 @@ public class CheckUsernamePasswordPageController {
                 stage.setScene(new Scene(loader.load(),800,600));
                 AdminPageController admin = loader.getController();
                 admin.setAccountManage(accountManage);
+                admin.setReadWriteAccountCsv(readWriteAccountCsv);
                 stage.show();
             }
         }
@@ -60,7 +61,8 @@ public class CheckUsernamePasswordPageController {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/staff_page.fxml"));
                 stage.setScene(new Scene(loader.load(),800,600));
                 StaffPageController staff = loader.getController();
-                staff.setAccount(accountManage);
+                staff.setAccountManage(accountManage);
+                staff.setReadWriteAccountCsv(readWriteAccountCsv);
                 readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
                 stage.show();
             }

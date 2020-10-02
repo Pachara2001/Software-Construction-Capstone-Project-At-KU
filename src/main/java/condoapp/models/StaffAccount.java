@@ -29,14 +29,35 @@ public class StaffAccount extends Account {
 
     public String addRoom(String building, String floor, String roomNo, String type, String resident1, String resident2, ArrayList<Room> roomList){
         for(Room i : roomList){
-            if(i.getRoomNo().equalsIgnoreCase(roomNo)) return "This room already have an information";
+            if(i.getRoomNo().equalsIgnoreCase(roomNo)) return "This room already have an information.";
 
         }
-            if(!building.equals(roomNo.substring(0,1)) )return "Room number not match with the building ";
-            if(!floor.equals(roomNo.substring(1,2))) return "Room number not match with the floor";
+            if(!building.equals(roomNo.substring(0,1)) )return "Room number not match with the building. ";
+            if(!floor.equals(roomNo.substring(1,2))) return "Room number not match with the floor.";
+//            int q = Integer.valueOf(roomNo.substring(2,4));
+//            if(q>15||q<=0||roomNo.length()!=4) return "Room number must be between XX01 and XX15.";
+
             Room a = new Room(building, floor, roomNo, type, resident1, resident2);
             roomList.add(a);
             return "";
+    }
+
+    public String addResident(String roomNo , String resident1 , String resident2,ArrayList<Room> roomList){
+        for(Room room : roomList){
+            if(room.isRoomNoMatch(roomNo)) {
+                if(room.getType().equals("One-Bedroom")&&!resident2.isEmpty()) return "Resident 2 must be void. ";
+                if(resident1.isEmpty()&&resident2.isEmpty()&&room.getType().equals("Two-Bedroom")) return "At Least must have 1 resident.";
+                if(resident1.isEmpty()&&room.getType().equals("One-Bedroom")) return "At Least must have 1 resident.";
+                else{
+                    room.setResident1(resident1);
+                    room.setResident2(resident2);
+                    return "";
+                }
+            }
+
+        }
+        return "Room not found !!";
+
     }
     public  void searchItemByRoomNo(String roomNo,ArrayList<Item> itemList){
         for(Item temp : itemList){
