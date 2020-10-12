@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>condoapp</groupId>
+    <groupId>condo</groupId>
     <artifactId>Project</artifactId>
     <version>1.0-SNAPSHOT</version>
     <properties>
-        <out.folder>6210401295</out.folder>
+        <out.folder>Application</out.folder>
         <out.filename>6210401295-jar</out.filename>
-        <project.mainClass>condoapp.controllers.Main</project.mainClass>
+        <project.mainClass>condo.Main</project.mainClass>
     </properties>
 
     <dependencies>

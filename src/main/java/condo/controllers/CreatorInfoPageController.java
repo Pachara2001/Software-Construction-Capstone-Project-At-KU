@@ -1,4 +1,4 @@
-package condoapp.controllers;
+package condo.controllers;
 
 public class CreatorInfoPageController {
 }

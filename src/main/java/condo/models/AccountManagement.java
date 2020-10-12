@@ -1,4 +1,4 @@
-package condoapp.models;
+package condo.models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -6,10 +6,10 @@ import java.util.ArrayList;
 
 public class AccountManagement {
     private ArrayList<AdminAccount> adminList;
-    private AdminAccount currentAdmin;
+    private AdminAccount currentAdmin=null;
 
     private ArrayList<StaffAccount> staffList;
-    private StaffAccount currentStaff;
+    private StaffAccount currentStaff=null;
 
 
     public AccountManagement(){
@@ -17,14 +17,14 @@ public class AccountManagement {
         staffList = new ArrayList<>();
     }
 
-    public String checkAdminAccount(String username, String password){
+    public void checkAdminAccount(String username, String password){
         for(AdminAccount checkAdmin : adminList){
-            if(username.equals(checkAdmin.getUsername())&&password.equals(checkAdmin.getPassword())){
+            if(username.equalsIgnoreCase(checkAdmin.getUsername())&&password.equals(checkAdmin.getPassword())){
                 currentAdmin=checkAdmin;
-                return  "";}
-            if(username.equals(checkAdmin.getUsername())&&!(password.equals(checkAdmin.getPassword()))){return "Wrong password ";}
+            }
+            if(username.equalsIgnoreCase(checkAdmin.getUsername())&&!(password.equals(checkAdmin.getPassword()))){ throw new IllegalArgumentException("Wrong pass word.");}
         }
-        return "Wrong username";
+        if(currentAdmin==null){throw new IllegalArgumentException("Wrong username.");}
 
     }
 
@@ -34,23 +34,23 @@ public class AccountManagement {
 
 
 
-    public String checkStaffAccount(String username, String password){
+    public void checkStaffAccount(String username, String password){
         for(StaffAccount a : staffList){
             int total = Integer.valueOf(a.getAttempt());
-            if(username.equals(a.getUsername())&&password.equals(a.getPassword())&&a.getPermission().equals("Allowed")){
+            if(username.equalsIgnoreCase(a.getUsername())&&password.equals(a.getPassword())&&a.getPermission().equals("Allowed")){
                 currentStaff=a;
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
                 String formattedDateTime = LocalDateTime.now().format(formatter);
                 currentStaff.setDateAndTimeStr(formattedDateTime);
-                return  "";}
-            else if(username.equals(a.getUsername())&&password.equals(a.getPassword())){
+              }
+            else if(username.equalsIgnoreCase(a.getUsername())&&password.equals(a.getPassword())){
                 total+=1;
                 a.setAttempt(total);
-                return "You don't have permission to access system.";
+                throw new SecurityException("You don't have permission to access system.");
             }
-            if(username.equals(a.getUsername())&&!(password.equals(a.getPassword()))){return "Wrong password ";}
+            if(username.equalsIgnoreCase(a.getUsername())&&!(password.equals(a.getPassword()))){ throw new IllegalArgumentException( "Wrong password ");}
         }
-        return "Wrong username";
+        if(currentStaff==null) throw new IllegalArgumentException( "Wrong username");
     }
 
     public StaffAccount getCurrentStaff() {

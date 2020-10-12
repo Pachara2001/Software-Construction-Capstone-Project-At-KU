@@ -1,8 +1,8 @@
-package condoapp.service;
+package condo.service;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
-import condoapp.models.Room;
+import condo.models.Room;
 
 import java.io.File;
 import java.io.FileReader;

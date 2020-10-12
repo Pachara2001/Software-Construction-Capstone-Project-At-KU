@@ -1,10 +1,10 @@
-package condoapp.service;
+package condo.service;
 
 import com.opencsv.*;
 import com.opencsv.exceptions.CsvValidationException;
-import condoapp.models.AdminAccount;
-import condoapp.models.SortByDateAndTime;
-import condoapp.models.StaffAccount;
+import condo.models.AdminAccount;
+import condo.models.SortByDateAndTime;
+import condo.models.StaffAccount;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -62,31 +62,19 @@ public class ReadWriteAccountCsv {
         reader.close();
     }
 
-    public void updateAdminCsv(ArrayList<AdminAccount> adminList) {
+    public void updateAdminCsv(ArrayList<AdminAccount> adminList) throws IOException {
 
         ArrayList<String[]> adminStr = new ArrayList<>();
         adminStr.clear();
         FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(adminCsvFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        fileWriter = new FileWriter(adminCsvFilePath);
         CSVWriter   writer = new CSVWriter(fileWriter);
-
-
         for(AdminAccount upAdmin : adminList){
                 String[] q = {upAdmin.getUsername(),upAdmin.getPassword()};
                 adminStr.add(q);
             }
-            writer.writeAll(adminStr);
-        try {
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        writer.writeAll(adminStr);
+        writer.close();
     }
 
     public void addStaffList(ArrayList<StaffAccount> staffList) throws IOException, CsvValidationException {
@@ -103,16 +91,10 @@ public class ReadWriteAccountCsv {
         reader.close();
     }
 
-    public void updateStaffCsv(ArrayList<StaffAccount> staffList)  {
+    public void updateStaffCsv(ArrayList<StaffAccount> staffList) throws IOException {
         ArrayList<String [] > staffStr = new ArrayList<>();
         staffList.sort(new SortByDateAndTime());
-        staffStr.clear();
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(staffCsvFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileWriter  fileWriter = new FileWriter(staffCsvFilePath);
         CSVWriter writer = new CSVWriter(fileWriter);
         for(StaffAccount staffUp : staffList){
 
@@ -121,10 +103,8 @@ public class ReadWriteAccountCsv {
         }
 
         writer.writeAll(staffStr);
-        try {
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        staffStr.clear();
+        writer.close();
+
     }
 }

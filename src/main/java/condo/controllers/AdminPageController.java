@@ -1,9 +1,11 @@
-package condoapp.controllers;
+package condo.controllers;
 
-import com.opencsv.exceptions.CsvValidationException;
-import condoapp.service.ReadWriteAccountCsv;
-import condoapp.models.AccountManagement;
-import condoapp.models.StaffAccount;
+
+
+import condo.Main;
+import condo.service.ReadWriteAccountCsv;
+import condo.models.AccountManagement;
+import condo.models.StaffAccount;
 import javafx.application.Platform;
 
 import javafx.collections.FXCollections;
@@ -35,8 +37,8 @@ import java.nio.file.StandardCopyOption;
 public class AdminPageController {
     private AccountManagement accountManage;
     private StaffAccount selectedStaff;
-    private ObservableList<StaffAccount> staffObservableList;
     private ReadWriteAccountCsv readWriteAccountCsv;
+
     @FXML private Label welcomeLabel,welcomeLabel1,welcomeLabel11,nameLabel,permissionLabel,attemptLabel,imageErrorLabel,errorCreateAccountLabel,errorMyAccountLabel,myPasswordLabel,myUsernameLabel;
     @FXML private PasswordField confirmNewPassTextField,confirmTextField,newPassTextField,passwordTextField;
     @FXML private ImageView staffPicImageView;
@@ -59,17 +61,17 @@ public class AdminPageController {
                 welcomeLabel11.setText(accountManage.getCurrentAdmin().getUsername());
                 myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
                 myUsernameLabel.setText(accountManage.getCurrentAdmin().getUsername());
-                updateSelectedStaffBtn.setDisable(true);
-                searchImageSelectedStaffBtn.setDisable(true);
-                editPermissionBtn.setDisable(true);
-                createStaffListTable();
+
 
             }
         });
-
+        updateSelectedStaffBtn.setDisable(true);
+        searchImageSelectedStaffBtn.setDisable(true);
+        editPermissionBtn.setDisable(true);
+        createStaffListTable();
     }
     public void createStaffListTable(){
-        staffObservableList = FXCollections.observableArrayList(accountManage.getStaffList());
+        ObservableList<StaffAccount> staffObservableList = FXCollections.observableArrayList(accountManage.getStaffList());
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<StaffAccount,String>("dateAndTimeStr"));
         usernameCol.setCellValueFactory(new PropertyValueFactory<StaffAccount,String>("username"));
         staffListTable.setItems(staffObservableList);
@@ -80,27 +82,29 @@ public class AdminPageController {
             }
         });
 
-    }    @FXML public void handleCreateBtn(ActionEvent event) throws IOException {
+    }
+    @FXML public void handleCreateBtn(ActionEvent event)  {
         if(nameTextField.getText().isEmpty()||usernameTextField.getText().isEmpty()||passwordTextField.getText().isEmpty()||confirmTextField.getText().isEmpty()||pictureTextField.getText().isEmpty()){
             errorCreateAccountLabel.setText("Fill out the empty fields.");
         }
         else {
             if(passwordTextField.getText().equals(confirmTextField.getText())){
                 errorCreateAccountLabel.setTextFill(Color.web("#bf2d2d"));
-                errorCreateAccountLabel.setText(accountManage.getCurrentAdmin().addStaff(usernameTextField.getText(),passwordTextField.getText(),nameTextField.getText(),pictureTextField.getText(),accountManage.getStaffList()));
-                readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
-                createStaffListTable();
+                try {
+                    accountManage.getCurrentAdmin().addStaff(usernameTextField.getText(), passwordTextField.getText(), nameTextField.getText(), pictureTextField.getText(), accountManage.getStaffList());
+                    readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
+                    createStaffListTable();
+                    errorCreateAccountLabel.setText("Success !!");
+                    errorCreateAccountLabel.setTextFill(Color.web("#44c55a"));
+                }
+                catch (IllegalArgumentException | IOException e){
+                errorCreateAccountLabel.setText(e.getMessage());
+                }
                 pictureTextField.setText("");
                 nameTextField.setText("");
                 usernameTextField.setText("");
                 passwordTextField.setText("");
                 confirmTextField.setText("");
-
-                if(errorCreateAccountLabel.getText().equals("")) {
-                    errorCreateAccountLabel.setText("Success !!");
-                    errorCreateAccountLabel.setTextFill(Color.web("#44c55a"));
-
-                }
             }
             else{
             errorCreateAccountLabel.setText("Passwords do not match");}
@@ -110,7 +114,7 @@ public class AdminPageController {
 
     }
 
-    @FXML public void handleChangeBtn(ActionEvent event)  {
+    @FXML public void handleChangeBtn(ActionEvent event) throws IOException {
         errorMyAccountLabel.setTextFill(Color.web("#bf2d2d"));
            if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
                accountManage.getCurrentAdmin().setPassword(newPassTextField.getText());
@@ -158,7 +162,7 @@ public class AdminPageController {
 
   private void showSelectedStaff(StaffAccount staff){
         staffPicImageView.setImage(null);
-        imageErrorLabel.setText(null);
+        imageErrorLabel.setText("");
         selectedStaff=staff;
         nameLabel.setText(staff.getName());
         permissionLabel.setText(staff.getPermission());
@@ -231,7 +235,7 @@ public class AdminPageController {
         permissionLabel.setText(selectedStaff.getPermission());
     }
 
-    @FXML public void handleUpdateSelectedStaffBtn(ActionEvent event)  {
+    @FXML public void handleUpdateSelectedStaffBtn(ActionEvent event) throws IOException {
 
         readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
         staffPicImageView.setImage(null);
@@ -251,6 +255,7 @@ public class AdminPageController {
         Stage stage =(Stage) b.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
         stage.setScene(new Scene(loader.load(),800,600));
+        stage.setResizable(false);
         stage.show();
     }
 

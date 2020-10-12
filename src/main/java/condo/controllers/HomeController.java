@@ -1,4 +1,4 @@
-package condoapp.controllers;
+package condo.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,6 +21,7 @@ public class HomeController {
        stage.setScene(new Scene(loader.load(),600,400));
        CheckUsernamePasswordPageController check = loader.getController();
        check.setStat("admin");
+       stage.setResizable(false);
        stage.show();
    }
     @FXML public void handleStaffBtn(ActionEvent event) throws IOException {
@@ -30,6 +31,7 @@ public class HomeController {
         stage.setScene(new Scene(loader.load(),600,400));
         CheckUsernamePasswordPageController check = loader.getController();
         check.setStat("staff");
+        stage.setResizable(false);
         stage.show();
     }
 

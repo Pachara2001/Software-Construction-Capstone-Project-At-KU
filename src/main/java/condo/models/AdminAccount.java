@@ -1,7 +1,6 @@
-package condoapp.models;
+package condo.models;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -14,20 +13,20 @@ public class AdminAccount extends Account {
     }
 
 
-    public String addStaff(String username, String password, String name, String picturePath, ArrayList<StaffAccount> staff) throws IOException {
+    public void addStaff(String username, String password, String name, String picturePath, ArrayList<StaffAccount> staff)  {
         for(StaffAccount s : staff){
-            if(username.equalsIgnoreCase(s.getUsername())) return "This username already exists ";
+            if(username.equalsIgnoreCase(s.getUsername())) throw  new IllegalArgumentException("This username already exists ");
         }
         StaffAccount newStaff = new StaffAccount(username,password,name,"Allowed","01/01/0001 00:00:01","0",picturePath);
         staff.add(newStaff);
-        return "";
+
     }
 
 
 
 
     public void editStaffPermission(StaffAccount staff){
-        if(staff.getPermission().equals("Not allowed")){
+        if(staff.getPermission().equalsIgnoreCase("Not allowed")){
             staff.setPermission("Allowed");
             staff.setAttempt(0);}
         else staff.setPermission("Not allowed");

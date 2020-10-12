@@ -1,14 +1,5 @@
-package condoapp.models;
+package condo.models;
 
-import com.opencsv.*;
-import com.opencsv.exceptions.CsvValidationException;
-import condoapp.models.Document;
-import condoapp.models.Item;
-import condoapp.models.Parcel;
-
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class ItemManagement {
@@ -20,6 +11,7 @@ public class ItemManagement {
         itemList=new ArrayList<>();
         receivedItemList =new ArrayList<>();
     }
+
 
     public ArrayList<Item> getItemList() {
         return itemList;

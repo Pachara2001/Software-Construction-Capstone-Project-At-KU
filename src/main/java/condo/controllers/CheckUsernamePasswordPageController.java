@@ -1,9 +1,9 @@
-package condoapp.controllers;
+package condo.controllers;
 
 import com.opencsv.exceptions.CsvValidationException;
 
-import condoapp.service.ReadWriteAccountCsv;
-import condoapp.models.AccountManagement;
+import condo.service.ReadWriteAccountCsv;
+import condo.models.AccountManagement;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,9 +39,8 @@ public class CheckUsernamePasswordPageController {
     }
     @FXML public void handleOkBtn(ActionEvent event) throws IOException {
         if(stat.equals("admin")){
-            String str = accountManage.checkAdminAccount(usernameText.getText(),passwordField.getText());
-            errorLabel.setText(str);
-            if(str.equals("")){
+            try {
+                accountManage.checkAdminAccount(usernameText.getText(), passwordField.getText());
                 Button b = (Button)event.getSource();
                 Stage stage = (Stage) b.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/admin_page.fxml"));
@@ -49,13 +48,20 @@ public class CheckUsernamePasswordPageController {
                 AdminPageController admin = loader.getController();
                 admin.setAccountManage(accountManage);
                 admin.setReadWriteAccountCsv(readWriteAccountCsv);
+                stage.setResizable(false);
                 stage.show();
             }
+            catch (IllegalArgumentException e){
+                errorLabel.setText(e.getMessage());
+            }
+
+
+
+
         }
         else {
-            String str = accountManage.checkStaffAccount(usernameText.getText(),passwordField.getText());
-            errorLabel.setText(str);
-            if(str.equals("")){
+            try {
+                accountManage.checkStaffAccount(usernameText.getText(), passwordField.getText());
                 Button b = (Button)event.getSource();
                 Stage stage = (Stage) b.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/staff_page.fxml"));
@@ -64,9 +70,19 @@ public class CheckUsernamePasswordPageController {
                 staff.setAccountManage(accountManage);
                 staff.setReadWriteAccountCsv(readWriteAccountCsv);
                 readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
+                stage.setResizable(false);
                 stage.show();
             }
-            else readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
+            catch (SecurityException e) {
+                errorLabel.setText(e.getMessage());
+            }
+            catch (IllegalArgumentException e){
+                errorLabel.setText(e.getMessage());
+            }
+            finally {
+                readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
+            }
+
     }
     }
 
@@ -75,6 +91,7 @@ public class CheckUsernamePasswordPageController {
         Stage stage =(Stage) b.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
         stage.setScene(new Scene(loader.load(),800,600));
+        stage.setResizable(false);
         stage.show();
     }
 
