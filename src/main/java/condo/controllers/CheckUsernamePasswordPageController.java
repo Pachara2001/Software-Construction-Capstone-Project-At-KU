@@ -4,6 +4,7 @@ import com.opencsv.exceptions.CsvValidationException;
 
 import condo.service.ReadWriteAccountCsv;
 import condo.models.AccountManagement;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +23,7 @@ public class CheckUsernamePasswordPageController {
     private String stat;
     private AccountManagement accountManage;
     private ReadWriteAccountCsv readWriteAccountCsv;
-    @FXML private Button okBtn;
+    @FXML private Button okBtn,registerBtn;
     @FXML private ImageView homeImg;
     @FXML private PasswordField passwordField;
     @FXML private TextField usernameText;
@@ -30,15 +31,23 @@ public class CheckUsernamePasswordPageController {
 
 
 
-    @FXML
-    public  void initialize() throws IOException, CsvValidationException {
-        readWriteAccountCsv = new ReadWriteAccountCsv("csv","admin.csv","staff.csv");
+    @FXML public  void initialize() throws IOException, CsvValidationException {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(stat.equals("resident")) registerBtn.setDisable(false);
+            }
+        });
+        readWriteAccountCsv = new ReadWriteAccountCsv("csv","admin.csv","staff.csv","resident.csv");
         accountManage = new AccountManagement();
         readWriteAccountCsv.addStaffList(accountManage.getStaffList());
         readWriteAccountCsv.addAdminList(accountManage.getAdminList());
+        readWriteAccountCsv.addResidentList(accountManage.getResidentList());
+        registerBtn.setDisable(true);
     }
     @FXML public void handleOkBtn(ActionEvent event) throws IOException {
         if(stat.equals("admin")){
+
             try {
                 accountManage.checkAdminAccount(usernameText.getText(), passwordField.getText());
                 Button b = (Button)event.getSource();
@@ -51,15 +60,15 @@ public class CheckUsernamePasswordPageController {
                 stage.setResizable(false);
                 stage.show();
             }
-            catch (IllegalArgumentException e){
+            catch (NullPointerException | IllegalArgumentException e){
                 errorLabel.setText(e.getMessage());
             }
 
 
-
-
         }
-        else {
+        
+        if(stat.equals("staff")) {
+
             try {
                 accountManage.checkStaffAccount(usernameText.getText(), passwordField.getText());
                 Button b = (Button)event.getSource();
@@ -73,17 +82,42 @@ public class CheckUsernamePasswordPageController {
                 stage.setResizable(false);
                 stage.show();
             }
-            catch (SecurityException e) {
-                errorLabel.setText(e.getMessage());
-            }
-            catch (IllegalArgumentException e){
+            catch (SecurityException | IllegalArgumentException | NullPointerException e) {
                 errorLabel.setText(e.getMessage());
             }
             finally {
                 readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
             }
+        }
+        else{
+            try {
+                accountManage.checkResidentAccount(usernameText.getText(), passwordField.getText());
+                Button b = (Button)event.getSource();
+                Stage stage = (Stage) b.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/resident_page.fxml"));
+                stage.setScene(new Scene(loader.load(),800,600));
+                ResidentPageController resident = loader.getController();
+                resident.setAccountManage(accountManage);
+                resident.setReadWriteAccountCsv(readWriteAccountCsv);
+                stage.setResizable(false);
+                stage.show();
+            }
+            catch (NullPointerException | IllegalArgumentException e){
+                errorLabel.setText(e.getMessage());
+            }
+        }
 
     }
+    @FXML public void handleRegisterBtn(ActionEvent event) throws IOException {
+        Button b = (Button)event.getSource();
+        Stage stage = (Stage) b.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_page.fxml"));
+        stage.setScene(new Scene(loader.load(),600,400));
+        RegisterPageController register = loader.getController();
+        register.setAccountManage(accountManage);
+        register.setReadWriteAccountCsv(readWriteAccountCsv);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML public void handleHomeImg(MouseEvent event) throws IOException {

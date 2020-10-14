@@ -31,8 +31,9 @@ public class StaffAccount extends Account implements Sort {
         for(Room room : roomList){
             if(room.isRoomNoMatch(building+floor+roomNo)) throw new IllegalArgumentException( "This room already have an information.");
         }
-            int floorInt = parseInt(floor);
-        if(floorInt<1)  throw new IllegalArgumentException( "floor must more than 0");
+        if(building.equals("-")||type.equals("-")||floor.isEmpty()||roomNo.isEmpty()) throw new IllegalArgumentException("Fill out the empty fields.");
+        int floorInt = parseInt(floor);
+        if(floorInt<1)  throw new IllegalArgumentException( "Floor must more than 0.");
         int room = parseInt(roomNo);
         if(roomNo.length()!=2||room<1||room>99) throw new IllegalArgumentException ("Room number must be between 01-99");
         roomNo=building+floor+roomNo;
@@ -62,32 +63,26 @@ public class StaffAccount extends Account implements Sort {
 
     }
 
-    public ArrayList<Item> searchItemByRoomNo(String roomNo,ArrayList<Item> itemList){
-        ArrayList<Item> item = new ArrayList<>();
-        if(roomNo.isEmpty()) return itemList;
-        for(Item temp : itemList){
-            if(temp.getRoomNo().equalsIgnoreCase(roomNo)) item.add(temp);
-        }
-        if(item.isEmpty()) throw new IllegalArgumentException("Item not found by this room number.");
-        return item;
-    }
+
 
     public void addItem(String type,String roomNo,String recipient,String sender , String size,String imagePath,String importance, String company, String trackingNumber,ArrayList<Item> itemList,ArrayList<Room> roomList){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String formattedDateTime = LocalDateTime.now().format(formatter);
         Item newItem= null;
+        roomNo= roomNo.toUpperCase();
         int findStatus=0;
         for(Room room : roomList ){
             if(room.isRoomNoMatch(roomNo)) {
                 findStatus=1;
-            if(!room.getResident1().equalsIgnoreCase(recipient)&&!room.getResident1().equalsIgnoreCase(recipient)) throw new IllegalArgumentException("Don't found this recipient in system");
+                if(!room.isResidentMatch(recipient)) throw new IllegalArgumentException("Recipient not match with any resident in this room number.");
             }
         }
-        if(findStatus==0)throw new IllegalArgumentException("Not found this roomNo in system.");
+        if(type.equals("-")) throw new IllegalArgumentException("Fill out the required information.");
+        if(findStatus==0)throw new IllegalArgumentException("Not found this room number in system.");
 
         if(type.equalsIgnoreCase("Letter")){
-            if(type.isEmpty()||roomNo.isEmpty()||recipient.isEmpty()||sender.isEmpty()||size.isEmpty()||imagePath.isEmpty()) throw new IllegalArgumentException ("Fill out the required information.");
-            if(!importance.isEmpty())throw new IllegalArgumentException("Importance must be void.");
+            if(roomNo.isEmpty()||recipient.isEmpty()||sender.isEmpty()||size.isEmpty()||imagePath.isEmpty()) throw new IllegalArgumentException ("Fill out the required information.");
+            if(!importance.equals("-"))throw new IllegalArgumentException("Importance must be void.");
             if(!company.isEmpty()) throw new IllegalArgumentException ("Company must be void.");
             if(!trackingNumber.isEmpty()) throw new IllegalArgumentException ("Tracking number must be void.");
             newItem = new Item(type,formattedDateTime,roomNo,recipient,sender,size,imagePath,name,"01/01/0001 00:00:01","-");
@@ -96,17 +91,18 @@ public class StaffAccount extends Account implements Sort {
 
 
         if(type.equalsIgnoreCase("Document")){
-            if(type.isEmpty()||roomNo.isEmpty()||recipient.isEmpty()||sender.isEmpty()||size.isEmpty()||imagePath.isEmpty()||importance.isEmpty()) throw new IllegalArgumentException ("Fill out the required information.");
+            if(roomNo.isEmpty()||recipient.isEmpty()||sender.isEmpty()||size.isEmpty()||imagePath.isEmpty()||importance.equals("-")) throw new IllegalArgumentException ("Fill out the required information.");
             if(!company.isEmpty()) throw new IllegalArgumentException ("Company must be void.");
             if(!trackingNumber.isEmpty()) throw new IllegalArgumentException("Tracking number must be void.");
             newItem = new Document(type,formattedDateTime,roomNo,recipient,sender,size,imagePath,name,importance,"01/01/0001 00:00:01","-");
 
         }
         if(type.equalsIgnoreCase("Parcel")){
-            if(!importance.isEmpty())throw new IllegalArgumentException("Importance must be void.");
-            if(type.isEmpty()||roomNo.isEmpty()||recipient.isEmpty()||sender.isEmpty()||size.isEmpty()||imagePath.isEmpty()||company.isEmpty()||trackingNumber.isEmpty()) throw new IllegalArgumentException("Fill out the required information.");
+            if(!importance.equals("-"))throw new IllegalArgumentException("Importance must be void.");
+            if(roomNo.isEmpty()||recipient.isEmpty()||sender.isEmpty()||size.isEmpty()||imagePath.isEmpty()||company.isEmpty()||trackingNumber.isEmpty()) throw new IllegalArgumentException("Fill out the required information.");
             newItem = new Parcel(type,formattedDateTime,roomNo,recipient, sender,size,imagePath,name,company,trackingNumber,"01/01/0001 00:00:01","-");
         }
+
         itemList.add(newItem);
 
     }
@@ -146,6 +142,7 @@ public class StaffAccount extends Account implements Sort {
         return permission;
     }
 
+
     public void setDateAndTimeStr(String dateAndTimeStr) {
         this.dateAndTimeStr = dateAndTimeStr;
     }
@@ -171,12 +168,5 @@ public class StaffAccount extends Account implements Sort {
         this.attempt = a;
     }
 
-    @Override
-    public String toString() {
-        return "StaffAccount{" + "Username :"+ getUsername()+ "Password :"+ getPassword()+
-                "permission='" + permission + '\'' +
-                ", dateAndTime='" + dateAndTime + '\'' +
-                ", total='" + attempt + '\'' +
-                '}';
-    }
+
 }

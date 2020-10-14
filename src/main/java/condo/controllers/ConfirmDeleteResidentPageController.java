@@ -13,7 +13,7 @@ public class ConfirmDeleteResidentPageController {
    @FXML private Label nameTextField;
    @FXML private Button noBtn,yesBtn;
 
-   public  void initialize() {
+   @FXML public  void initialize() {
       Platform.runLater(new Runnable() {
          public void run() {
             nameTextField.setText(name+" ?");
@@ -21,13 +21,13 @@ public class ConfirmDeleteResidentPageController {
          }
    });
 }
-   public void handleYesBtn(){
+   @FXML public void handleYesBtn(){
       status=1;
       Stage stage = (Stage) yesBtn.getScene().getWindow();
       stage.close();
 
    }
-   public void handleNoBtn(){
+   @FXML public void handleNoBtn(){
       Stage stage = (Stage) noBtn.getScene().getWindow();
       stage.close();
    }

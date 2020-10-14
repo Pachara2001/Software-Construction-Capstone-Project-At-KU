@@ -12,6 +12,15 @@ public class ItemManagement {
         receivedItemList =new ArrayList<>();
     }
 
+    public ArrayList<Item> searchItemByRoomNo(String roomNo,ArrayList<Item> itemList){
+        ArrayList<Item> item = new ArrayList<>();
+        if(roomNo.isEmpty()) return itemList;
+        for(Item temp : itemList){
+            if(temp.getRoomNo().equalsIgnoreCase(roomNo)) item.add(temp);
+        }
+        if(item.isEmpty()) throw new IllegalArgumentException("Item not found by this room number.");
+        return item;
+    }
 
     public ArrayList<Item> getItemList() {
         return itemList;

@@ -19,6 +19,11 @@ public class Room {
         return false;
     }
 
+    public boolean isResidentMatch(String name){
+        if(resident1.equalsIgnoreCase(name)||resident2.equalsIgnoreCase(name)) return true;
+        return false;
+    }
+
     public boolean checkResident(){
         if(type.equalsIgnoreCase("One-Bedroom")&&!resident1.isEmpty()) return true;
         if(type.equalsIgnoreCase("Two-Bedroom")&&(!resident1.isEmpty()||!resident2.isEmpty())) return true;

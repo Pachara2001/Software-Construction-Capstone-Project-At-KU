@@ -46,10 +46,10 @@ public class StaffPageController {
     @FXML private Label roomNoLabel,selectedReceivedSizeLabel, selectedReceivedSenderLabel,selectedReceivedAcceptStaffLabel, selectedReceivedPickedLabel, selectedReceivedStaffPickLabel,selectedReceived1Label,receivedInfoLabel1,receivedInfoLabel2,selectedReceived2Label,selReceivedImageErrorLabel,searchReceivedErrorLabel,editRoomErrorLabel,searchRoomErrorLabel,searchItemErrorLabel,createItemErrorLabel,errorCreateResidentLabel,imageErrorLabel,errorCreateRoomLabel,errorNewPassLabel,errorReceivedLabel,myPasswordLabel,myUsernameLabel,roomsTypeLabel,selectedAcceptStaffLabel,selectedItem1Label,selectedItem2Label,selectedSenderLabel,selectedSizeLabel,welcomeLabel,welcomeLabel2,welcomeLabel3,welcomeLabel4,welcomeLabel5,welcomeLabel6,selectedItemInfo1Label,selectedItemInfo2Label;
     @FXML private PasswordField confirmNewPassTextField,newPassTextField;
     @FXML private TableColumn itemDateCol,itemRecipientCol,itemRoomNoCol,itemTypeCol,roomBuildingCol,roomFloorCol,roomNoCol,receivedItemDateCol,receivedItemRoomNoCol,receivedItemRecipientCol,receivedItemTypeCol;
-    @FXML private TextField searchRoomTextField,resident2TextField,resident1TextField,createFloorTextField,createSizeTextField,createImageTextField,residentRoomNoTextField,createSenderTextField,createRecipientTextField,createCompanyTextField,createImportanceTextField,createTrackTextField,createResident1TextField,createResident2TextField,createItemRoomNoTextField,createRoomNoTextField,recipientTextField,searchItemRoomNoTextField,searchReceivedItemRoomNoTextField;
-    @FXML private ChoiceBox roomsTypeChoiceBox,buildingChoiceBox,itemTypeChoiceBox;
+    @FXML private TextField searchRoomTextField,resident2TextField,resident1TextField,createFloorTextField,createSizeTextField,createImageTextField,residentRoomNoTextField,createSenderTextField,createRecipientTextField,createCompanyTextField,createTrackTextField,createResident1TextField,createResident2TextField,createItemRoomNoTextField,createRoomNoTextField,recipientTextField,searchItemRoomNoTextField,searchReceivedItemRoomNoTextField;
+    @FXML private ChoiceBox createImportanceChoiceBox,roomsTypeChoiceBox,buildingChoiceBox,itemTypeChoiceBox;
 
-    public  void initialize() throws IOException, CsvValidationException {
+ @FXML   public  void initialize() throws IOException, CsvValidationException {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -74,14 +74,18 @@ public class StaffPageController {
         fillRoomsTypeChoiceBox();
         fillBuildingChoiceBox();
         fillItemTypeChoiceBox();
+        fillCreateImportanceChoiceBox();
         createItemListTable(itemManage.getItemList());
-        createReceivedItemListTable(itemManage.getItemList());
+        createReceivedItemListTable(itemManage.getReceivedItemList());
         createRoomListTable(roomManage.getRoomList());
-        receiveBtn.setDisable(true);
+        errorCreateRoomLabel.setText("");
+        errorCreateResidentLabel.setText("");
+        createItemErrorLabel.setText("");
+        errorNewPassLabel.setText("");
+
     }
 
     public void createRoomListTable(ArrayList<Room> roomList){
-        //sortListByID
         clearSelectedRoom();
         ObservableList<Room> roomObservableList = FXCollections.observableArrayList(roomList);
         roomBuildingCol.setCellValueFactory(new PropertyValueFactory<Room,String>("building"));
@@ -97,6 +101,7 @@ public class StaffPageController {
 
     }
     private void showSelectedRoom(Room room){
+        updateRoomInfoBtn.setDisable(false);
         selectedRoom=room;
         roomNoLabel.setText(selectedRoom.getRoomNo());
         roomsTypeLabel.setText(selectedRoom.getType());
@@ -104,6 +109,7 @@ public class StaffPageController {
         resident2TextField.setText(selectedRoom.getResident2());
     }
     public void clearSelectedRoom(){
+        updateRoomInfoBtn.setDisable(true);
         roomNoLabel.setText("");
         roomsTypeLabel.setText("");
         resident1TextField.setText("");
@@ -111,7 +117,7 @@ public class StaffPageController {
         editRoomErrorLabel.setText("");
         searchRoomErrorLabel.setText("");
     }
-    public void handleUpdateRoomInfoBtn(ActionEvent event) throws IOException {
+    @FXML public void handleUpdateRoomInfoBtn(ActionEvent event) throws IOException {
         editRoomErrorLabel.setTextFill(Color.web("#bf2d2d"));
 
         if((!selectedRoom.getResident1().isEmpty()&&resident1TextField.getText().isEmpty())||(!selectedRoom.getResident2().isEmpty()&&resident2TextField.getText().isEmpty())){
@@ -121,9 +127,7 @@ public class StaffPageController {
             stage.setScene(new Scene(loader.load(),500,300));
             ConfirmDeleteResidentPageController confirm = loader.getController();
             if(!selectedRoom.getResident1().isEmpty()&&resident1TextField.getText().isEmpty()) confirm.setName(selectedRoom.getResident1());
-
             else if(!selectedRoom.getResident2().isEmpty()&&resident2TextField.getText().isEmpty()) confirm.setName(selectedRoom.getResident2());
-
             if((!selectedRoom.getResident1().isEmpty()&&resident1TextField.getText().isEmpty())&&(!selectedRoom.getResident2().isEmpty()&&resident2TextField.getText().isEmpty())) confirm.setName(selectedRoom.getResident1()+" and "+selectedRoom.getResident2());
             stage.setTitle("confirm");
             stage.setResizable(false);
@@ -136,13 +140,16 @@ public class StaffPageController {
             readWriteRoomCsv.updateRoomCsv(roomManage.getRoomList());
             editRoomErrorLabel.setText("success !!");
             editRoomErrorLabel.setTextFill(Color.web("#44c55a"));
+            clearSelectedRoom();
+            roomTable.refresh();
+            roomTable.getSelectionModel().clearSelection();
         }
         catch (IllegalArgumentException e){
             editRoomErrorLabel.setText(e.getMessage());
         }
 
     }
-    public void handleSearchRoomBtn(ActionEvent event){
+    @FXML public void handleSearchRoomBtn(ActionEvent event){
         searchRoomErrorLabel.setText("");
         try {
             createRoomListTable(roomManage.searchRoomByResident(searchRoomTextField.getText()));
@@ -204,11 +211,14 @@ public class StaffPageController {
             e.printStackTrace();
         }
         receiveBtn.setDisable(false);
+        searchSelectedItemImageBtn.setDisable(false);
 
 
 
     }
     public void clearSelectedItem(){
+        receiveBtn.setDisable(true);
+        searchSelectedItemImageBtn.setDisable(true);
         selectedItem1Label.setText("");
         selectedItemInfo1Label.setText("");
         selectedItem2Label.setText("");
@@ -219,9 +229,10 @@ public class StaffPageController {
         selectedAcceptStaffLabel.setText("");
         searchItemErrorLabel.setText("");
         imageErrorLabel.setText("");
+        recipientTextField.setText("");
         itemImage.setImage(null);
     }
-    public void handleReceiveBtn(ActionEvent event) throws IOException {
+    @FXML public void handleReceiveBtn(ActionEvent event) throws IOException {
         if(recipientTextField.getText().equalsIgnoreCase(selectedItem.getRecipient())){
             accountManage.getCurrentStaff().receiveItem(selectedItem,itemManage.getItemList(),itemManage.getReceivedItemList());
             readWriteItemCsv.updateItemCsv(itemManage.getItemList());
@@ -229,6 +240,8 @@ public class StaffPageController {
             createItemListTable(itemManage.getItemList());
             createReceivedItemListTable(itemManage.getReceivedItemList());
             clearSelectedItem();
+            itemTable.refresh();
+            itemTable.getSelectionModel().clearSelection();
         }
         else{errorReceivedLabel.setText("Recipient name don't match with database.");}
 
@@ -303,10 +316,10 @@ public class StaffPageController {
         selReceivedImageErrorLabel.setText("");
     }
 
-    public void handleSearchReceivedItemRoomNoBtn(){
+    @FXML public void handleSearchReceivedItemRoomNoBtn(){
         searchReceivedErrorLabel.setText("");
         try {
-            createReceivedItemListTable(accountManage.getCurrentStaff().searchItemByRoomNo(searchReceivedItemRoomNoTextField.getText(), itemManage.getReceivedItemList()));
+            createReceivedItemListTable(itemManage.searchItemByRoomNo(searchReceivedItemRoomNoTextField.getText(), itemManage.getReceivedItemList()));
         }
         catch (IllegalArgumentException e){
             searchReceivedErrorLabel.setText(e.getMessage());
@@ -315,10 +328,10 @@ public class StaffPageController {
 
 
 
-    public void handleSearchItemRoomNoBtn(ActionEvent event){
+    @FXML public void handleSearchItemRoomNoBtn(ActionEvent event){
         searchItemErrorLabel.setText("");
         try {
-            createItemListTable(accountManage.getCurrentStaff().searchItemByRoomNo(searchItemRoomNoTextField.getText(), itemManage.getItemList()));
+            createItemListTable(itemManage.searchItemByRoomNo(searchItemRoomNoTextField.getText(), itemManage.getItemList()));
         }
         catch (IllegalArgumentException e){
             searchItemErrorLabel.setText(e.getMessage());
@@ -327,7 +340,7 @@ public class StaffPageController {
 
 
 
-    public void handleSearchSelectedItemImageBtn(){
+    @FXML public void handleSearchSelectedItemImageBtn(){
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png")
@@ -367,8 +380,9 @@ public class StaffPageController {
     }
 
 
-    public void handleChangePassBtn(ActionEvent event) throws IOException {
+    @FXML  public void handleChangePassBtn(ActionEvent event) throws IOException {
         errorNewPassLabel.setTextFill(Color.web("#bf2d2d"));
+        if(newPassTextField.getText().isEmpty()||confirmNewPassTextField.getText().isEmpty()) errorNewPassLabel.setText("Fill out the empty field.");
         if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
             accountManage.getCurrentStaff().setPassword(newPassTextField.getText());
             myPasswordLabel.setText(accountManage.getCurrentStaff().getPassword());
@@ -386,6 +400,7 @@ public class StaffPageController {
         list.add("Two-Bedroom");
         ObservableList obList = FXCollections.observableArrayList(list);
         roomsTypeChoiceBox.setItems(obList);
+        roomsTypeChoiceBox.setValue("-");
     }
     public void fillBuildingChoiceBox(){
         ArrayList<String> list = new ArrayList<>();
@@ -393,6 +408,7 @@ public class StaffPageController {
         list.add("B");
         ObservableList obList = FXCollections.observableArrayList(list);
         buildingChoiceBox.setItems(obList);
+        buildingChoiceBox.setValue("-");
     }
     public void fillItemTypeChoiceBox(){
         ArrayList<String> list = new ArrayList<>();
@@ -401,6 +417,23 @@ public class StaffPageController {
         list.add("Parcel");
         ObservableList obList = FXCollections.observableArrayList(list);
         itemTypeChoiceBox.setItems(obList);
+        itemTypeChoiceBox.setValue("-");
+    }
+    public void fillCreateImportanceChoiceBox(){
+        ArrayList<String> list = new ArrayList<>();
+        list.add("Top Secret");
+        list.add("Secret");
+        list.add("Confidential");
+        list.add("Restricted");
+        list.add("Unclassified");
+        list.add("Emergency");
+        list.add("Urgent");
+        list.add("Standard");
+        list.add("Normal");
+
+        ObservableList obList = FXCollections.observableArrayList(list);
+        createImportanceChoiceBox.setItems(obList);
+        createImportanceChoiceBox.setValue("-");
     }
 
 
@@ -438,8 +471,9 @@ public class StaffPageController {
     }
     @FXML public void handleCreateItemBtn() throws IOException {
         createItemErrorLabel.setTextFill(Color.web("#bf2d2d"));
+
         try{
-            accountManage.getCurrentStaff().addItem((String)itemTypeChoiceBox.getValue(),createItemRoomNoTextField.getText(),createRecipientTextField.getText(),createSenderTextField.getText(),createSizeTextField.getText(),createImageTextField.getText(),createImportanceTextField.getText(),createCompanyTextField.getText(),createTrackTextField.getText(),itemManage.getItemList(),roomManage.getRoomList());
+            accountManage.getCurrentStaff().addItem((String)itemTypeChoiceBox.getValue(),createItemRoomNoTextField.getText(),createRecipientTextField.getText(),createSenderTextField.getText(),createSizeTextField.getText(),createImageTextField.getText(),(String)createImportanceChoiceBox.getValue(),createCompanyTextField.getText(),createTrackTextField.getText(),itemManage.getItemList(),roomManage.getRoomList());
             readWriteItemCsv.updateItemCsv(itemManage.getItemList());
             createItemListTable(itemManage.getItemList());
             createItemErrorLabel.setText("Success !!");
@@ -449,13 +483,15 @@ public class StaffPageController {
             createItemErrorLabel.setText(e.getMessage());
         }
         itemTypeChoiceBox.setValue(null);
+        itemTypeChoiceBox.setValue("-");
+        createImportanceChoiceBox.setValue(null);
+        createImportanceChoiceBox.setValue("-");
         createSizeTextField.setText("");
         createImageTextField.setText("");
         createItemRoomNoTextField.setText("");
         createSenderTextField.setText("");
         createRecipientTextField.setText("");
         createCompanyTextField.setText("");
-        createImportanceTextField.setText("");
         createTrackTextField.setText("");
     }
 
@@ -464,8 +500,8 @@ public class StaffPageController {
         this.readWriteAccountCsv = readWriteAccountCsv;
     }
     @FXML public void handleCreateResidentBtn() throws IOException {
+        errorCreateResidentLabel.setTextFill(Color.web("#bf2d2d"));
 
-        errorCreateRoomLabel.setTextFill(Color.web("#bf2d2d"));
         try{
             accountManage.getCurrentStaff().addResident(residentRoomNoTextField.getText(), createResident1TextField.getText(), createResident2TextField.getText(), roomManage.getRoomList());
             readWriteRoomCsv.updateRoomCsv(roomManage.getRoomList());
@@ -482,18 +518,21 @@ public class StaffPageController {
     }
     @FXML public void handleCreateRoomBtn() throws IOException {
        errorCreateRoomLabel.setTextFill(Color.web("#bf2d2d"));
+
        try{
            accountManage.getCurrentStaff().addRoom((String)buildingChoiceBox.getValue(),createFloorTextField.getText(),createRoomNoTextField.getText(),(String) roomsTypeChoiceBox.getValue(),"","",roomManage.getRoomList());
            readWriteRoomCsv.updateRoomCsv(roomManage.getRoomList());
            createRoomListTable(roomManage.getRoomList());
-           errorCreateRoomLabel.setText("Success !!");
+           errorCreateRoomLabel.setText("Success !! Your room number is "+buildingChoiceBox.getValue()+createFloorTextField.getText()+createRoomNoTextField.getText());
            errorCreateRoomLabel.setTextFill(Color.web("#44c55a"));
        }
        catch (IllegalArgumentException e) {
            errorCreateRoomLabel.setText(e.getMessage());
        }
        roomsTypeChoiceBox.setValue(null);
+       roomsTypeChoiceBox.setValue("-");
        buildingChoiceBox.setValue(null);
+       buildingChoiceBox.setValue("-");
        createFloorTextField.setText("");
        createRoomNoTextField.setText("");
 

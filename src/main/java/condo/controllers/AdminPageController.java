@@ -3,6 +3,7 @@ package condo.controllers;
 
 
 import condo.Main;
+import condo.models.SortByDateAndTime;
 import condo.service.ReadWriteAccountCsv;
 import condo.models.AccountManagement;
 import condo.models.StaffAccount;
@@ -51,7 +52,7 @@ public class AdminPageController {
 
 
 
-    public  void initialize()  {
+    @FXML public  void initialize()  {
 
         Platform.runLater(new Runnable() {
             @Override
@@ -61,16 +62,16 @@ public class AdminPageController {
                 welcomeLabel11.setText(accountManage.getCurrentAdmin().getUsername());
                 myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
                 myUsernameLabel.setText(accountManage.getCurrentAdmin().getUsername());
-
-
+                createStaffListTable();
             }
         });
         updateSelectedStaffBtn.setDisable(true);
         searchImageSelectedStaffBtn.setDisable(true);
         editPermissionBtn.setDisable(true);
-        createStaffListTable();
+
     }
     public void createStaffListTable(){
+        accountManage.getStaffList().sort(new SortByDateAndTime());
         ObservableList<StaffAccount> staffObservableList = FXCollections.observableArrayList(accountManage.getStaffList());
         dateTimeCol.setCellValueFactory(new PropertyValueFactory<StaffAccount,String>("dateAndTimeStr"));
         usernameCol.setCellValueFactory(new PropertyValueFactory<StaffAccount,String>("username"));
@@ -84,27 +85,28 @@ public class AdminPageController {
 
     }
     @FXML public void handleCreateBtn(ActionEvent event)  {
+        errorCreateAccountLabel.setTextFill(Color.web("#bf2d2d"));
         if(nameTextField.getText().isEmpty()||usernameTextField.getText().isEmpty()||passwordTextField.getText().isEmpty()||confirmTextField.getText().isEmpty()||pictureTextField.getText().isEmpty()){
             errorCreateAccountLabel.setText("Fill out the empty fields.");
         }
         else {
             if(passwordTextField.getText().equals(confirmTextField.getText())){
-                errorCreateAccountLabel.setTextFill(Color.web("#bf2d2d"));
                 try {
                     accountManage.getCurrentAdmin().addStaff(usernameTextField.getText(), passwordTextField.getText(), nameTextField.getText(), pictureTextField.getText(), accountManage.getStaffList());
                     readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
                     createStaffListTable();
                     errorCreateAccountLabel.setText("Success !!");
                     errorCreateAccountLabel.setTextFill(Color.web("#44c55a"));
+                    pictureTextField.setText("");
+                    nameTextField.setText("");
+                    usernameTextField.setText("");
+                    passwordTextField.setText("");
+                    confirmTextField.setText("");
                 }
                 catch (IllegalArgumentException | IOException e){
-                errorCreateAccountLabel.setText(e.getMessage());
+                    usernameTextField.setText("");
+                    errorCreateAccountLabel.setText(e.getMessage());
                 }
-                pictureTextField.setText("");
-                nameTextField.setText("");
-                usernameTextField.setText("");
-                passwordTextField.setText("");
-                confirmTextField.setText("");
             }
             else{
             errorCreateAccountLabel.setText("Passwords do not match");}
@@ -116,14 +118,15 @@ public class AdminPageController {
 
     @FXML public void handleChangeBtn(ActionEvent event) throws IOException {
         errorMyAccountLabel.setTextFill(Color.web("#bf2d2d"));
-           if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
+        if(newPassTextField.getText().isEmpty()||confirmNewPassTextField.getText().isEmpty()) errorMyAccountLabel.setText("Fill out the empty field.");
+        else  if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
                accountManage.getCurrentAdmin().setPassword(newPassTextField.getText());
                myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
                readWriteAccountCsv.updateAdminCsv(accountManage.getAdminList());
                errorMyAccountLabel.setText("Success !!");
                errorMyAccountLabel.setTextFill(Color.web("#44c55a"));
            }
-           else {errorMyAccountLabel.setText("Passwords do not match");}
+        else errorMyAccountLabel.setText("Passwords do not match");
         newPassTextField.setText("");
         confirmNewPassTextField.setText("");
 
@@ -166,6 +169,8 @@ public class AdminPageController {
         selectedStaff=staff;
         nameLabel.setText(staff.getName());
         permissionLabel.setText(staff.getPermission());
+        if(staff.getPermission().equalsIgnoreCase("Allowed")) permissionLabel.setTextFill(Color.web("#44c55a"));
+        else permissionLabel.setTextFill(Color.web("#bf2d2d"));
         attemptLabel.setText(staff.getAttempt());
       File jarDir = null;
       File codeDir = null;
@@ -236,12 +241,12 @@ public class AdminPageController {
     }
 
     @FXML public void handleUpdateSelectedStaffBtn(ActionEvent event) throws IOException {
-
         readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
         staffPicImageView.setImage(null);
         nameLabel.setText("");
         permissionLabel.setText("");
         imageErrorLabel.setText("");
+        attemptLabel.setText("");
         updateSelectedStaffBtn.setDisable(true);
         searchImageSelectedStaffBtn.setDisable(true);
         editPermissionBtn.setDisable(true);

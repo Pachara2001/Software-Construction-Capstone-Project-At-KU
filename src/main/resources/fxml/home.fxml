@@ -18,7 +18,7 @@
             <Image url="@../image/Block-44-Condo1.jpg" />
          </image>
       </ImageView>
-      <Button fx:id="staffBtn" alignment="CENTER" contentDisplay="TOP" layoutX="470.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleStaffBtn" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../Stylesheet/button.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="164.0">
+      <Button fx:id="staffBtn" alignment="CENTER" contentDisplay="TOP" layoutX="468.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleStaffBtn" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../Stylesheet/button.css" text="STAFF" textFill="WHITE" AnchorPane.rightAnchor="166.0">
          <effect>
             <Reflection />
          </effect>
@@ -56,7 +56,7 @@
             </Shadow>
          </effect>
       </Label>
-      <Button fx:id="adminBtn" alignment="CENTER" contentDisplay="TOP" layoutX="183.0" layoutY="224.0" mnemonicParsing="false" onAction="#handleAdminBtn" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../Stylesheet/button.css" text="ADMIN" textFill="WHITE">
+      <Button fx:id="adminBtn" alignment="CENTER" contentDisplay="TOP" layoutX="189.0" layoutY="158.0" mnemonicParsing="false" onAction="#handleAdminBtn" pickOnBounds="false" prefHeight="153.0" prefWidth="166.0" styleClass="button1" stylesheets="@../Stylesheet/button.css" text="ADMIN" textFill="WHITE">
          <effect>
             <Reflection />
          </effect>
@@ -73,6 +73,18 @@
                </image>
             </ImageView>
          </graphic>
+      </Button>
+      <Button fx:id="residentBtn" alignment="CENTER" contentDisplay="TOP" layoutX="189.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleResidentBtn" pickOnBounds="false" prefHeight="154.0" prefWidth="449.0" styleClass="button1" stylesheets="@../Stylesheet/button.css" text="RESIDENT">
+         <graphic>
+            <ImageView fitHeight="108.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/outline_apartment_white_48dp.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <effect>
+            <Reflection />
+         </effect>
       </Button>
    </children>
    <effect>
