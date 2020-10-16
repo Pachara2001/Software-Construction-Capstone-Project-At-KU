@@ -1,12 +1,9 @@
 package condo.controllers;
 
-import com.opencsv.exceptions.CsvValidationException;
 import condo.models.AccountManagement;
-import condo.models.ItemManagement;
 import condo.models.RoomManagement;
-import condo.service.ReadWriteAccountCsv;
-import condo.service.ReadWriteItemCsv;
-import condo.service.ReadWriteRoomCsv;
+import condo.services.ReadWriteAccountCsv;
+import condo.services.ReadWriteRoomCsv;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +26,7 @@ public class RegisterPageController {
 @FXML private Label errorLabel;
 
 
-@FXML public void initialize() throws IOException, CsvValidationException {
+@FXML public void initialize()  {
     roomManage = new RoomManagement();
     readWriteRoomCsv = new ReadWriteRoomCsv("csv","room.csv");
     readWriteRoomCsv.addRoomList(roomManage.getRoomList());
@@ -40,10 +37,10 @@ public class RegisterPageController {
         try{
             accountManage.createResident(roomNoTextField.getText(),nameTextField.getText(),passwordTextField.getText(),roomManage.getRoomList());
             readWriteAccountCsv.updateResidentCsv(accountManage.getResidentList());
-            errorLabel.setText("Your username is "+nameTextField.getText()+roomNoTextField.getText().toUpperCase());
+            errorLabel.setText("Your username is "+nameTextField.getText()+roomNoTextField.getText().toUpperCase()+".");
             errorLabel.setTextFill(Color.web("#44c55a"));
         }
-        catch (IllegalArgumentException | IOException e){
+        catch (IllegalArgumentException e){
             errorLabel.setText(e.getMessage());
         }
         roomNoTextField.setText("");
@@ -54,19 +51,20 @@ public class RegisterPageController {
     else errorLabel.setText("Passwords do not match.");
 }
 
-    @FXML public void handleHomeImg(MouseEvent event) throws IOException {
+    @FXML public void handleHomeImg(MouseEvent event)  {
         ImageView b=(ImageView) event.getSource();
         Stage stage =(Stage) b.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
-        stage.setScene(new Scene(loader.load(),800,600));
+        try {
+            stage.setScene(new Scene(loader.load(),800,600));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         stage.setResizable(false);
         stage.show();
     }
 
-    public void setReadWriteAccountCsv(ReadWriteAccountCsv readWriteAccountCsv) {
-        this.readWriteAccountCsv = readWriteAccountCsv;
-    }
-
+    public void setReadWriteAccountCsv(ReadWriteAccountCsv readWriteAccountCsv) { this.readWriteAccountCsv = readWriteAccountCsv; }
     public void setAccountManage(AccountManagement accountManage) {
         this.accountManage = accountManage;
     }

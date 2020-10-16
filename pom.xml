@@ -9,8 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <properties>
         <out.folder>Application</out.folder>
-        <out.filename>6210401295-jar</out.filename>
-        <project.mainClass>condo.Main</project.mainClass>
+        <out.filename>6210401295</out.filename>
+        <project.mainClass>condo.Start</project.mainClass>
     </properties>
 
     <dependencies>

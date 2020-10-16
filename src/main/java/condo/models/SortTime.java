@@ -2,6 +2,6 @@ package condo.models;
 
 import java.time.LocalDateTime;
 
-public interface Sort {
+public interface SortTime {
     LocalDateTime getTime();
 }

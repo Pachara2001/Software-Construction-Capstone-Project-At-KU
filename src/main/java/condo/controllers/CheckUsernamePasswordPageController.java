@@ -1,8 +1,8 @@
 package condo.controllers;
 
-import com.opencsv.exceptions.CsvValidationException;
 
-import condo.service.ReadWriteAccountCsv;
+
+import condo.services.ReadWriteAccountCsv;
 import condo.models.AccountManagement;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -31,7 +31,7 @@ public class CheckUsernamePasswordPageController {
 
 
 
-    @FXML public  void initialize() throws IOException, CsvValidationException {
+    @FXML public  void initialize()  {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -45,9 +45,8 @@ public class CheckUsernamePasswordPageController {
         readWriteAccountCsv.addResidentList(accountManage.getResidentList());
         registerBtn.setDisable(true);
     }
-    @FXML public void handleOkBtn(ActionEvent event) throws IOException {
+    @FXML public void handleOkBtn(ActionEvent event) {
         if(stat.equals("admin")){
-
             try {
                 accountManage.checkAdminAccount(usernameText.getText(), passwordField.getText());
                 Button b = (Button)event.getSource();
@@ -60,14 +59,13 @@ public class CheckUsernamePasswordPageController {
                 stage.setResizable(false);
                 stage.show();
             }
-            catch (NullPointerException | IllegalArgumentException e){
+           catch ( NullPointerException |IllegalArgumentException e){
                 errorLabel.setText(e.getMessage());
             }
-
-
+            catch (IOException e) {e.printStackTrace();}
         }
         
-        if(stat.equals("staff")) {
+        else if(stat.equals("staff")) {
 
             try {
                 accountManage.checkStaffAccount(usernameText.getText(), passwordField.getText());
@@ -85,6 +83,7 @@ public class CheckUsernamePasswordPageController {
             catch (SecurityException | IllegalArgumentException | NullPointerException e) {
                 errorLabel.setText(e.getMessage());
             }
+            catch (IOException e) {e.printStackTrace();}
             finally {
                 readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
             }
@@ -105,10 +104,12 @@ public class CheckUsernamePasswordPageController {
             catch (NullPointerException | IllegalArgumentException e){
                 errorLabel.setText(e.getMessage());
             }
+            catch (IOException e) {e.printStackTrace();}
         }
 
     }
-    @FXML public void handleRegisterBtn(ActionEvent event) throws IOException {
+    @FXML public void handleRegisterBtn(ActionEvent event) {
+        try{
         Button b = (Button)event.getSource();
         Stage stage = (Stage) b.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/register_page.fxml"));
@@ -118,15 +119,19 @@ public class CheckUsernamePasswordPageController {
         register.setReadWriteAccountCsv(readWriteAccountCsv);
         stage.setResizable(false);
         stage.show();
+        }
+        catch (IOException e) {e.printStackTrace();}
     }
 
-    @FXML public void handleHomeImg(MouseEvent event) throws IOException {
+    @FXML public void handleHomeImg(MouseEvent event)  {
+        try{
         ImageView b=(ImageView) event.getSource();
         Stage stage =(Stage) b.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
         stage.setScene(new Scene(loader.load(),800,600));
         stage.setResizable(false);
-        stage.show();
+        stage.show();}
+        catch (IOException e) {e.printStackTrace();}
     }
 
 

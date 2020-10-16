@@ -3,7 +3,7 @@ package condo.models;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Item implements Sort{
+public class Item implements SortTime {
 
     private String type, recipient,roomNo,sender,size,imagePath,dateAndTimeStr,staff,receivedWithStaff, receivedDateAndTimeStr;
     private LocalDateTime dateAndTime ,receivedDateAndTime;
@@ -24,7 +24,6 @@ public class Item implements Sort{
         dateTime = LocalDateTime.parse(receivedDateAndTimeStr, formatter);
         receivedDateAndTime = dateTime;
         this.receivedWithStaff=receivedWithStaff;
-
     }
 
     public String[] getInformation() {
@@ -32,73 +31,53 @@ public class Item implements Sort{
         return q;
     }
 
+    public boolean checkType(String type){
+        if(this.type.equalsIgnoreCase(type)) return true;
+        return false;
+    }
 
+    public void receivedItem(String name){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        receivedDateAndTimeStr = LocalDateTime.now().format(formatter);
+        receivedDateAndTime=LocalDateTime.now();
+        receivedWithStaff=name;
+    }
 
     public String getStaff() {
         return staff;
     }
-
     public String getDateAndTimeStr() {
         return dateAndTimeStr;
     }
-
-
     public String getReceivedWithStaff() {
         return receivedWithStaff;
     }
-
-    public void setDateAndTimeStr(String dateAndTimeStr) {
-        this.dateAndTimeStr = dateAndTimeStr;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(dateAndTimeStr, formatter);
-        this.dateAndTime = dateTime;
-    }
-
-    public void setReceivedDateAndTimeStr(String receivedDateAndTimeStr) {
-        this.receivedDateAndTimeStr = receivedDateAndTimeStr;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(receivedDateAndTimeStr, formatter);
-        receivedDateAndTime = dateTime;
-    }
-
     public String getRecipient() {
         return recipient;
     }
-
     public String getRoomNo() {
         return roomNo;
     }
-
     public String getSender() {
         return sender;
     }
-
     public String getSize() {
         return size;
     }
-
     public String getImagePath() {
         return imagePath;
     }
-
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
-
     public String getType() { return type; }
-
     @Override
     public LocalDateTime getTime() {
         if(receivedWithStaff.equalsIgnoreCase("-")) return dateAndTime;
         return receivedDateAndTime;
     }
-
     public String getReceivedDateAndTimeStr() {
         return receivedDateAndTimeStr;
-    }
-
-    public void setReceivedWithStaff(String receivedWithStaff) {
-        this.receivedWithStaff = receivedWithStaff;
     }
 }
 

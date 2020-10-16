@@ -1,10 +1,10 @@
 package condo.controllers;
 
-import com.opencsv.exceptions.CsvValidationException;
-import condo.Main;
+
+import condo.Start;
 import condo.models.*;
-import condo.service.ReadWriteAccountCsv;
-import condo.service.ReadWriteItemCsv;
+import condo.services.ReadWriteAccountCsv;
+import condo.services.ReadWriteItemCsv;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -51,20 +51,12 @@ public class ResidentPageController {
                 myPasswordLabel.setText(accountManage.getCurrentResident().getPassword());
                 itemManage = new ItemManagement();
                 readWriteItemCsv = new ReadWriteItemCsv("csv","items.csv","receivedItem.csv");
-                try {
-                    readWriteItemCsv.addItemList(itemManage.getItemList());
-                    readWriteItemCsv.addReceivedItemList(itemManage.getReceivedItemList());
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                } catch (CsvValidationException e) {
-                    e.printStackTrace();
-                }
+                readWriteItemCsv.addItemList(itemManage.getItemList());
+                readWriteItemCsv.addReceivedItemList(itemManage.getReceivedItemList());
                 createItemListTable(itemManage.searchItemByRoomNo(accountManage.getCurrentResident().getRoomNo(),itemManage.getItemList()));
                 createReceivedItemListTable(itemManage.searchItemByRoomNo(accountManage.getCurrentResident().getRoomNo(),itemManage.getReceivedItemList()));
             }
         });
-
     }
 
     public void createItemListTable(ArrayList<Item> itemList){
@@ -82,7 +74,6 @@ public class ResidentPageController {
                 showSelectedItem(a);
             }
         });
-
     }
     public void showSelectedItem(Item item){
         selectedItem=item;
@@ -90,12 +81,11 @@ public class ResidentPageController {
         selectedSizeLabel.setText(selectedItem.getSize());
         selectedSenderLabel.setText(selectedItem.getSender());
         selectedAcceptStaffLabel.setText(selectedItem.getStaff());
-
         if(selectedItem.getType().equalsIgnoreCase("parcel")){
             Parcel parcel = (Parcel) selectedItem;
             selectedItem1Label.setText("Company :");
             selectedItemInfo1Label.setText(parcel.getCompany());
-            selectedItem2Label.setText("Tracking Number :");
+            selectedItem2Label.setText("Tracking No. :");
             selectedItemInfo2Label.setText(parcel.getTrackingNumber());
         }
         if(selectedItem.getType().equalsIgnoreCase("document")){
@@ -106,22 +96,18 @@ public class ResidentPageController {
         File jarDir = null;
         File codeDir = null;
         try {
-            jarDir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            jarDir = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
             codeDir = jarDir.getParentFile();
             String path = codeDir.toString() + File.separator + selectedItem.getImagePath();
             File uploadFile = new File(path);
             itemImage.setImage(new Image(uploadFile.toURI().toString()));
             if(!uploadFile.exists()){
-                imageErrorLabel.setText("Image not found!!");
+                imageErrorLabel.setText("Image not found !!");
             }
         }
         catch (URISyntaxException e) {
             e.printStackTrace();
         }
-
-
-
-
     }
     public void clearSelectedItem(){
         selectedItem1Label.setText("");
@@ -175,13 +161,13 @@ public class ResidentPageController {
         File jarDir = null;
         File codeDir = null;
         try {
-            jarDir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+            jarDir = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
             codeDir = jarDir.getParentFile();
             String path = codeDir.toString() + File.separator + selectedReceivedItem.getImagePath();
             File uploadFile = new File(path);
             receivedItemImage.setImage(new Image(uploadFile.toURI().toString()));
             if(!uploadFile.exists()){
-                selReceivedImageErrorLabel.setText("Image not found!!");
+                selReceivedImageErrorLabel.setText("Image not found !!");
             }
         }
         catch (URISyntaxException e) {
@@ -201,27 +187,20 @@ public class ResidentPageController {
         selectedReceivedStaffPickLabel.setText("");
         selReceivedImageErrorLabel.setText("");
     }
-
-    public void setReadWriteAccountCsv(ReadWriteAccountCsv readWriteAccountCsv) {
-        this.readWriteAccountCsv = readWriteAccountCsv;
-    }
-
-    public void setAccountManage(AccountManagement accountManage) {
-        this.accountManage = accountManage;
-    }
-
-
-
-    @FXML public void handleHomeImg(MouseEvent event) throws IOException {
+    @FXML public void handleHomeImg(MouseEvent event)   {
         ImageView b=(ImageView) event.getSource();
         Stage stage =(Stage) b.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
-        stage.setScene(new Scene(loader.load(),800,600));
+        try {
+            stage.setScene(new Scene(loader.load(),800,600));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         stage.setResizable(false);
         stage.show();
     }
 
-    @FXML public void handleChangeBtn(ActionEvent event) throws IOException {
+    @FXML public void handleChangeBtn(ActionEvent event)  {
         errorMyAccountLabel.setTextFill(Color.web("#bf2d2d"));
         if(newPassTextField.getText().isEmpty()||confirmNewPassTextField.getText().isEmpty()) errorMyAccountLabel.setText("Fill out the empty field.");
         else  if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
@@ -231,10 +210,14 @@ public class ResidentPageController {
             errorMyAccountLabel.setText("Success !!");
             errorMyAccountLabel.setTextFill(Color.web("#44c55a"));
         }
-        else errorMyAccountLabel.setText("Passwords do not match");
+        else errorMyAccountLabel.setText("Passwords do not match.");
         newPassTextField.setText("");
         confirmNewPassTextField.setText("");
+    }
 
+    public void setReadWriteAccountCsv(ReadWriteAccountCsv readWriteAccountCsv) { this.readWriteAccountCsv = readWriteAccountCsv; }
 
+    public void setAccountManage(AccountManagement accountManage) {
+        this.accountManage = accountManage;
     }
 }

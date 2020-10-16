@@ -34,7 +34,7 @@
                   </TableView>
                   <ImageView fx:id="HomeImg" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/outline_home_white_48dp.png" />
+                        <Image url="@../images/outline_home_white_48dp.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
@@ -86,14 +86,14 @@
                         <Font name="System Bold Italic" size="25.0" />
                      </font>
                   </Label>
-                  <Label fx:id="imageErrorLabel" layoutX="536.0" layoutY="215.0" prefHeight="27.0" prefWidth="156.0" textFill="#bf2d2d">
+                  <Label fx:id="imageErrorLabel" alignment="CENTER" layoutX="509.0" layoutY="217.0" prefHeight="27.0" prefWidth="234.0" textFill="#bf2d2d">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="searchImageSelectedStaffBtn" layoutX="699.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleSearchImageSelectedStaffBtn" stylesheets="@../Stylesheet/button.css" text="SEARCH" />
-                  <Button fx:id="editPermissionBtn" layoutX="698.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleEditPermissionBtn" stylesheets="@../Stylesheet/button.css" text="EDIT" />
-                  <Button fx:id="updateSelectedStaffBtn" layoutX="568.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleUpdateSelectedStaffBtn" stylesheets="@../Stylesheet/button.css" text="UPDATE" />
+                  <Button fx:id="searchImageSelectedStaffBtn" layoutX="699.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleSearchImageSelectedStaffBtn" stylesheets="@../stylesheets/button.css" text="SEARCH" />
+                  <Button fx:id="editPermissionBtn" layoutX="698.0" layoutY="369.0" mnemonicParsing="false" onAction="#handleEditPermissionBtn" stylesheets="@../stylesheets/button.css" text="EDIT" />
+                  <Button fx:id="updateSelectedStaffBtn" layoutX="568.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleUpdateSelectedStaffBtn" stylesheets="@../stylesheets/button.css" text="UPDATE" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -102,23 +102,23 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
                   <TextField fx:id="nameTextField" layoutX="391.0" layoutY="132.0" />
-                  <Label layoutX="191.0" layoutY="138.0" text="NAME :" textFill="#f8f8f8">
+                  <Label layoutX="191.0" layoutY="138.0" text="NAME :">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="usernameTextField" layoutX="391.0" layoutY="174.0" />
-                  <Label layoutX="191.0" layoutY="179.0" text="USERNAME :" textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="179.0" text="USERNAME :">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="193.0" layoutY="263.0" text="PASSWORD :" textFill="WHITE">
+                  <Label layoutX="193.0" layoutY="263.0" text="PASSWORD :">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="createBtn" layoutX="502.0" layoutY="364.0" mnemonicParsing="false" onAction="#handleCreateBtn" stylesheets="@../Stylesheet/button.css" text="CREATE" textFill="WHITE">
+                  <Button fx:id="createBtn" layoutX="502.0" layoutY="364.0" mnemonicParsing="false" onAction="#handleCreateBtn" stylesheets="@../stylesheets/button.css" text="CREATE" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -130,14 +130,14 @@
                   </Label>
                   <ImageView fx:id="HomeImg1" fitHeight="67.0" fitWidth="76.0" layoutY="498.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/outline_home_white_48dp.png" />
+                        <Image url="@../images/outline_home_white_48dp.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
                   <PasswordField fx:id="passwordTextField" layoutX="391.0" layoutY="256.0" />
-                  <Label layoutX="191.0" layoutY="309.0" text="CONFIRM PASSWORD :" textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="309.0" text="CONFIRM PASSWORD :">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
@@ -153,13 +153,13 @@
                         <Font name="System Bold Italic" size="25.0" />
                      </font>
                   </Label>
-                  <Label layoutX="191.0" layoutY="217.0" text="IMAGE :" textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="217.0" text="IMAGE :">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
                   <TextField fx:id="pictureTextField" layoutX="391.0" layoutY="215.0" />
-                  <Button fx:id="searchImgBtn" layoutX="588.0" layoutY="215.0" mnemonicParsing="false" onAction="#handleSearchBtn" stylesheets="@../Stylesheet/button.css" text="SEARCH" textFill="WHITE">
+                  <Button fx:id="searchImgBtn" layoutX="588.0" layoutY="215.0" mnemonicParsing="false" onAction="#handleSearchBtn" stylesheets="@../stylesheets/button.css" text="SEARCH" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -171,39 +171,39 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
-                  <Label layoutX="191.0" layoutY="136.0" text="USERNAME :  " textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="136.0" text="USERNAME :  ">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="191.0" layoutY="163.0" text="PASSWORD :" textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="163.0" text="PASSWORD :">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="myUsernameLabel" layoutX="319.0" layoutY="136.0" text="admindsfsg" textFill="WHITE">
+                  <Label fx:id="myUsernameLabel" layoutX="319.0" layoutY="136.0" text="admindsfsg">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="myPasswordLabel" layoutX="319.0" layoutY="163.0" text="admindsfsg" textFill="WHITE">
+                  <Label fx:id="myPasswordLabel" layoutX="319.0" layoutY="163.0" text="admindsfsg">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
                   <PasswordField fx:id="newPassTextField" layoutX="352.0" layoutY="194.0" prefHeight="31.0" prefWidth="229.0" />
                   <PasswordField fx:id="confirmNewPassTextField" layoutX="393.0" layoutY="235.0" />
-                  <Label layoutX="191.0" layoutY="196.0" text="NEW PASSWORD :  " textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="196.0" text="NEW PASSWORD :  ">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="191.0" layoutY="235.0" text="CONFIRM PASSWORD : " textFill="WHITE">
+                  <Label layoutX="191.0" layoutY="235.0" text="CONFIRM PASSWORD : ">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Button fx:id="changeBtn" layoutX="584.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleChangeBtn" stylesheets="@../Stylesheet/button.css" text="CHANGE" textFill="WHITE">
+                  <Button fx:id="changeBtn" layoutX="584.0" layoutY="235.0" mnemonicParsing="false" onAction="#handleChangeBtn" stylesheets="@../stylesheets/button.css" text="CHANGE" textFill="WHITE">
                      <font>
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
@@ -215,7 +215,7 @@
                   </Label>
                   <ImageView fx:id="HomeImg2" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../image/outline_home_white_48dp.png" />
+                        <Image url="@../images/outline_home_white_48dp.png" />
                      </image>
                      <cursor>
                         <Cursor fx:constant="HAND" />

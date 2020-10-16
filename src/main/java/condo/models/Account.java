@@ -9,7 +9,6 @@ public class Account {
     }
     public void setPassword(String password)  {
         this.password=password;
-
     }
     public String getPassword() {
         return password;
@@ -18,6 +17,15 @@ public class Account {
     public String getUsername() {
         return username;
     }
+
+    public boolean entryCheck(String username,String password){
+        if(this.username.equalsIgnoreCase(username)) {
+            if(this.password.equals(password)) return true;
+            else throw new IllegalArgumentException("Wrong password.");
+        }
+        return false;
+    }
+
 
 
 }

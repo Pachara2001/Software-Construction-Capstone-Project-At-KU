@@ -1,7 +1,6 @@
 package condo.models;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 
 public class AccountManagement {
@@ -23,40 +22,30 @@ public class AccountManagement {
 
     public void checkAdminAccount(String username, String password){
         for(AdminAccount checkAdmin : adminList){
-            if(username.equalsIgnoreCase(checkAdmin.getUsername())){
-                if(checkAdmin.getPassword().equals(password)) currentAdmin=checkAdmin;
-                else throw new IllegalArgumentException("Wrong password.");
+            try{
+            if(checkAdmin.entryCheck(username,password)) currentAdmin=checkAdmin;
+            }
+            catch (IllegalArgumentException e){
+                throw new IllegalArgumentException(e.getMessage());
             }
         }
-        if(currentAdmin==null){throw new NullPointerException("Wrong username.");}
+
+        if(currentAdmin==null){
+            throw new NullPointerException("Wrong username.");
+        }
 
     }
-
-    public AdminAccount getCurrentAdmin() {
-        return currentAdmin;
-    }
-
-
 
     public void checkStaffAccount(String username, String password){
         for(StaffAccount a : staffList){
-            if(username.equalsIgnoreCase(a.getUsername())){
-
-                if(password.equals(a.getPassword())){
-                    if(a.getPermission().equals("Allowed")){
-                        currentStaff=a;
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                        String formattedDateTime = LocalDateTime.now().format(formatter);
-                        currentStaff.setDateAndTimeStr(formattedDateTime);
-                    }
-                    else{
-                        int total = Integer.valueOf(a.getAttempt());
-                        total+=1;
-                        a.setAttempt(total);
-                        throw new SecurityException("You don't have permission to access system.");
-                    }
-                }
-                else throw new IllegalArgumentException( "Wrong password.");
+            try {
+                if (a.entryCheck(username, password)) currentStaff = a;
+            }
+            catch (IllegalArgumentException e){
+                throw new IllegalArgumentException(e.getMessage());
+            }
+            catch (SecurityException e){
+                throw  new SecurityException(e.getMessage());
             }
         }
         if(currentStaff==null) throw new NullPointerException( "Wrong username.");
@@ -77,34 +66,25 @@ public class AccountManagement {
         for(ResidentAccount res : residentList){
             if(res.getUsername().equalsIgnoreCase(username)) throw new IllegalArgumentException("This name already have an account.");
         }
-
         residentList.add(new ResidentAccount(username,password,name,roomNo));
     }
 
     public void checkResidentAccount(String username,String password){
         for(ResidentAccount resident : residentList){
-            if(resident.getUsername().equalsIgnoreCase(username)){
-                if(resident.getPassword().equals(password)) currentResident=resident;
-                else throw new IllegalArgumentException("Wrong password.");
+            try {
+                if (resident.entryCheck(username, password)) currentResident = resident;
             }
-        }
+            catch(IllegalArgumentException e){
+                    throw new IllegalArgumentException(e.getMessage());
+                }
+            }
         if(currentResident==null) throw new NullPointerException("Wrong username.");
-
-    }
-    public StaffAccount getCurrentStaff() {
-        return currentStaff;
     }
 
+    public StaffAccount getCurrentStaff() { return currentStaff; }
     public ArrayList<AdminAccount> getAdminList() { return adminList; }
-    public ArrayList<StaffAccount> getStaffList() {
-        return staffList;
-    }
-
-    public ArrayList<ResidentAccount> getResidentList() {
-        return residentList;
-    }
-
-    public ResidentAccount getCurrentResident() {
-        return currentResident;
-    }
+    public ArrayList<StaffAccount> getStaffList() { return staffList; }
+    public ArrayList<ResidentAccount> getResidentList() { return residentList; }
+    public ResidentAccount getCurrentResident() { return currentResident; }
+    public AdminAccount getCurrentAdmin() { return currentAdmin; }
 }

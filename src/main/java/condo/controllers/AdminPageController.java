@@ -2,9 +2,9 @@ package condo.controllers;
 
 
 
-import condo.Main;
+import condo.Start;
 import condo.models.SortByDateAndTime;
-import condo.service.ReadWriteAccountCsv;
+import condo.services.ReadWriteAccountCsv;
 import condo.models.AccountManagement;
 import condo.models.StaffAccount;
 import javafx.application.Platform;
@@ -47,9 +47,6 @@ public class AdminPageController {
     @FXML private TableColumn usernameCol,dateTimeCol;
     @FXML private Button createBtn,changeBtn,searchImgBtn,searchImageSelectedStaffBtn,editPermissionBtn,updateSelectedStaffBtn;
     @FXML private TextField nameTextField,usernameTextField,pictureTextField;
-
-
-
 
 
     @FXML public  void initialize()  {
@@ -103,20 +100,17 @@ public class AdminPageController {
                     passwordTextField.setText("");
                     confirmTextField.setText("");
                 }
-                catch (IllegalArgumentException | IOException e){
+                catch (IllegalArgumentException e){
                     usernameTextField.setText("");
                     errorCreateAccountLabel.setText(e.getMessage());
                 }
             }
             else{
-            errorCreateAccountLabel.setText("Passwords do not match");}
+            errorCreateAccountLabel.setText("Passwords do not match.");}
         }
-
-
-
     }
 
-    @FXML public void handleChangeBtn(ActionEvent event) throws IOException {
+    @FXML public void handleChangeBtn(ActionEvent event)  {
         errorMyAccountLabel.setTextFill(Color.web("#bf2d2d"));
         if(newPassTextField.getText().isEmpty()||confirmNewPassTextField.getText().isEmpty()) errorMyAccountLabel.setText("Fill out the empty field.");
         else  if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
@@ -126,41 +120,29 @@ public class AdminPageController {
                errorMyAccountLabel.setText("Success !!");
                errorMyAccountLabel.setTextFill(Color.web("#44c55a"));
            }
-        else errorMyAccountLabel.setText("Passwords do not match");
+        else errorMyAccountLabel.setText("Passwords do not match.");
         newPassTextField.setText("");
         confirmNewPassTextField.setText("");
-
-
     }
     @FXML public void handleSearchBtn(ActionEvent event){
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png")
-        );
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile!=null){
             Path target = null;
             File destDir = null;
             try {
-
                destDir = new File("images");
                 destDir.mkdirs();
-
                 target = FileSystems.getDefault().getPath(destDir.getAbsolutePath()+System.getProperty("file.separator")+selectedFile.getName());
-
                 Files.copy(selectedFile.toPath(), target, StandardCopyOption.REPLACE_EXISTING );
                 pictureTextField.setText(destDir.getName()+File.separator+selectedFile.getName());
-
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-
         }
-    }
-    public void setAccountManage(AccountManagement accountManage) {
-        this.accountManage = accountManage;
     }
 
   private void showSelectedStaff(StaffAccount staff){
@@ -175,13 +157,13 @@ public class AdminPageController {
       File jarDir = null;
       File codeDir = null;
       try {
-          jarDir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+          jarDir = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
           codeDir = jarDir.getParentFile();
           String path = codeDir.toString() + File.separator + selectedStaff.getPicturePath();
           File uploadFile = new File(path);
           staffPicImageView.setImage(new Image(uploadFile.toURI().toString()));
           if(!uploadFile.exists()){
-              imageErrorLabel.setText("Image not found!!");
+              imageErrorLabel.setText("Image not found !!");
           }
       }
       catch (URISyntaxException e) {
@@ -194,30 +176,24 @@ public class AdminPageController {
     @FXML public void handleSearchImageSelectedStaffBtn(ActionEvent event) {
         Stage stage = new Stage();
         FileChooser fileChooser = new FileChooser();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png")
-        );
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
         File selectedFile = fileChooser.showOpenDialog(stage);
         if(selectedFile!=null){
             imageErrorLabel.setText("");
             File destDir = null;
             try {
-
                 destDir = new File("images");
                 destDir.mkdirs();
-
                 Path target = FileSystems.getDefault().getPath(destDir.getAbsolutePath()+System.getProperty("file.separator")+selectedFile.getName());
-
                 Files.copy(selectedFile.toPath(), target, StandardCopyOption.REPLACE_EXISTING );
                 selectedStaff.setPicturePath(destDir.getName()+File.separator+selectedFile.getName());
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             File jarDir = null;
             File codeDir = null;
             try {
-                jarDir = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
+                jarDir = new File(Start.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
                 codeDir = jarDir.getParentFile();
                 String path = codeDir.toString() + File.separator + selectedStaff.getPicturePath();
                 File uploadFile = new File(path);
@@ -227,20 +203,16 @@ public class AdminPageController {
             }
 
         }
-
-
-
-
-
-
     }
 
     @FXML public void handleEditPermissionBtn(ActionEvent event){
         accountManage.getCurrentAdmin().editStaffPermission(selectedStaff);
         permissionLabel.setText(selectedStaff.getPermission());
+        if(selectedStaff.getPermission().equalsIgnoreCase("Allowed")) permissionLabel.setTextFill(Color.web("#44c55a"));
+        else permissionLabel.setTextFill(Color.web("#bf2d2d"));
     }
 
-    @FXML public void handleUpdateSelectedStaffBtn(ActionEvent event) throws IOException {
+    @FXML public void handleUpdateSelectedStaffBtn(ActionEvent event)  {
         readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
         staffPicImageView.setImage(null);
         nameLabel.setText("");
@@ -254,17 +226,21 @@ public class AdminPageController {
         staffListTable.getSelectionModel().clearSelection();
     }
 
-
-    @FXML public void handleHomeImg(MouseEvent event) throws IOException {
+    @FXML public void handleHomeImg(MouseEvent event)  {
         ImageView b=(ImageView) event.getSource();
         Stage stage =(Stage) b.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
-        stage.setScene(new Scene(loader.load(),800,600));
+        try {
+            stage.setScene(new Scene(loader.load(),800,600));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         stage.setResizable(false);
         stage.show();
     }
 
-    public void setReadWriteAccountCsv(ReadWriteAccountCsv readWriteAccountCsv) {
-        this.readWriteAccountCsv = readWriteAccountCsv;
+    public void setReadWriteAccountCsv(ReadWriteAccountCsv readWriteAccountCsv) { this.readWriteAccountCsv = readWriteAccountCsv; }
+    public void setAccountManage(AccountManagement accountManage) {
+        this.accountManage = accountManage;
     }
 }

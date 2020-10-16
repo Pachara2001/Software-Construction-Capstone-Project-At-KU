@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import static java.lang.Integer.parseInt;
 
 
-public class StaffAccount extends Account implements Sort {
+public class StaffAccount extends Account implements SortTime {
     private  String permission, attempt,picturePath,name,dateAndTimeStr;
     private LocalDateTime dateAndTime;
 
@@ -35,7 +35,7 @@ public class StaffAccount extends Account implements Sort {
         int floorInt = parseInt(floor);
         if(floorInt<1)  throw new IllegalArgumentException( "Floor must more than 0.");
         int room = parseInt(roomNo);
-        if(roomNo.length()!=2||room<1||room>99) throw new IllegalArgumentException ("Room number must be between 01-99");
+        if(roomNo.length()!=2||room<1||room>99) throw new IllegalArgumentException ("Room number must be between 01-99.");
         roomNo=building+floor+roomNo;
         Room a = new Room(building, floor, roomNo, type, resident1, resident2);
         roomList.add(a);
@@ -108,61 +108,57 @@ public class StaffAccount extends Account implements Sort {
     }
 
     public void receiveItem(Item item  , ArrayList<Item> itemList, ArrayList<Item> receivedItemList){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        String formattedDateTime = LocalDateTime.now().format(formatter);
-        item.setReceivedDateAndTimeStr(formattedDateTime);
-        item.setReceivedWithStaff(name);
+        item.receivedItem(name);
         receivedItemList.add(item);
         itemList.remove(item);
+    }
 
+    @Override
+    public boolean entryCheck(String username, String password) {
+       if(getUsername().equalsIgnoreCase(username)){
+           if(getPassword().equals(password)) {
+               if (permission.equals("Allowed")) {
+                   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+                   dateAndTimeStr = LocalDateTime.now().format(formatter);
+                   dateAndTime=LocalDateTime.now();
+                   return true;
+               } else {
+                   int total = Integer.valueOf(attempt);
+                   total += 1;
+                   setAttempt(total);
+                   throw new SecurityException("You don't have permission to access the system.");
+               }
+           }
+           else throw new IllegalArgumentException("Wrong password.");
+       }
+       return false;
     }
 
     @Override
     public LocalDateTime getTime() {
         return dateAndTime;
     }
-
     public String getName() {
         return name;
     }
-
     public String getAttempt() {
         return attempt;
     }
-
     public String getDateAndTimeStr() {
         return dateAndTimeStr;
     }
-
     public void setPermission(String permission) {
         this.permission = permission;
     }
-
     public String getPermission() {
         return permission;
     }
-
-
-    public void setDateAndTimeStr(String dateAndTimeStr) {
-        this.dateAndTimeStr = dateAndTimeStr;
-    }
-
     public void setPicturePath(String picturePath) {
         this.picturePath = picturePath;
     }
-
-    public void setDateAndTime(LocalDateTime dateAndTime) {
-        this.dateAndTime = dateAndTime;
-    }
-
-    public LocalDateTime getDateAndTime() {
-        return dateAndTime;
-    }
-
     public String getPicturePath() {
         return picturePath;
     }
-
     public void setAttempt(int attempt) {
         String a=String.valueOf(attempt);
         this.attempt = a;

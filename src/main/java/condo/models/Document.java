@@ -11,7 +11,6 @@ public class Document extends Item {
     public String getImportance() {
         return importance;
     }
-
     @Override
     public String[] getInformation() {
         String[] q = new String[]{getType() , getDateAndTimeStr() ,getRoomNo(), getRecipient(),getSender(),getSize(),getImagePath(),getStaff(), importance,getReceivedDateAndTimeStr(),getReceivedWithStaff()};

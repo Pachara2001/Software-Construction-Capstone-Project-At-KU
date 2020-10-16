@@ -1,13 +1,11 @@
-package condo.service;
+package condo.services;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
+import com.opencsv.exceptions.CsvValidationException;
 import condo.models.Room;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class ReadWriteRoomCsv {
@@ -39,26 +37,50 @@ public class ReadWriteRoomCsv {
 
 
     }
-    public void addRoomList(ArrayList<Room> roomList) throws IOException, com.opencsv.exceptions.CsvValidationException {
+    public void addRoomList(ArrayList<Room> roomList) {
         roomList.clear();
-        CSVReader reader = new CSVReader(new FileReader(roomCsvFilePath));
+        CSVReader reader=null;
+        try{
+        reader = new CSVReader(new FileReader(roomCsvFilePath));
         String [] room;
         while((room = reader.readNext())!=null) {
             Room ad = new Room(room[0], room[1],room[2],room[3],room[4],room[5]);
             roomList.add(ad);
+        }} catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        reader.close();
+
     }
-    public void updateRoomCsv(ArrayList<Room> roomList) throws IOException{
+    public void updateRoomCsv(ArrayList<Room> roomList) {
         ArrayList<String[]> roomStr = new ArrayList<>();
-        roomStr.clear();
-        CSVWriter writer = new CSVWriter(new FileWriter(roomCsvFilePath));
+        CSVWriter writer =null;
+        try{
+         writer = new CSVWriter(new FileWriter(roomCsvFilePath));
         for(Room upRoom : roomList){
             String[] q = {upRoom.getBuilding(),upRoom.getFloor(),upRoom.getRoomNo(),upRoom.getType(),upRoom.getResident1(),upRoom.getResident2()};
             roomStr.add(q);
         }
-        writer.writeAll(roomStr);
-        writer.close();
+        writer.writeAll(roomStr);} catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
 
     }
 }

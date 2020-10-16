@@ -1,4 +1,4 @@
-package condo.service;
+package condo.services;
 
 import com.opencsv.*;
 import com.opencsv.exceptions.CsvValidationException;
@@ -6,10 +6,7 @@ import condo.models.Document;
 import condo.models.Item;
 import condo.models.Parcel;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class ReadWriteItemCsv {
@@ -52,10 +49,12 @@ public class ReadWriteItemCsv {
             }
         }
     }
-    public void addItemList(ArrayList<Item> itemList) throws IOException, CsvValidationException {
+    public void addItemList(ArrayList<Item> itemList) {
         itemList.clear();
+        CSVReader reader=null;
+        try{
         CSVParser csvParser = new CSVParserBuilder().withEscapeChar('\0').build();
-        CSVReader reader = new CSVReaderBuilder(new FileReader(itemCsvFilePath)).withCSVParser(csvParser).build();
+        reader = new CSVReaderBuilder(new FileReader(itemCsvFilePath)).withCSVParser(csvParser).build();
         String [] item;
         while((item = reader.readNext())!=null) {
 
@@ -71,37 +70,50 @@ public class ReadWriteItemCsv {
                 Item  a = new Parcel(item[0],item[1],item[2],item[3],item[4],item[5],item[6],item[7],item[8],item[9],item[10],item[11]);
                 itemList.add(a);
             }
+        }} catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
         }
-        reader.close();
-    }
-    public void updateItemCsv(ArrayList<Item> itemList) throws IOException {
-
-        ArrayList <String []> itemStr = new ArrayList<>();
-        CSVWriter writer = new CSVWriter(new FileWriter(itemCsvFilePath));
-        for(Item itemUp : itemList){
-
-            String[] q = null;
-            if(itemUp.getType().equalsIgnoreCase("letter")){
-                q=itemUp.getInformation();
+        finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if(itemUp.getType().equalsIgnoreCase("document")){
-                Document temp = (Document)itemUp;
-                q=temp.getInformation();            }
-            if(itemUp.getType().equalsIgnoreCase("parcel")){
-                Parcel temp = (Parcel)itemUp;
-                q=temp.getInformation();            }
+        }
+
+    }
+    public void updateItemCsv(ArrayList<Item> itemList)  {
+        ArrayList <String []> itemStr = new ArrayList<>();
+        CSVWriter writer = null;
+        try{
+         writer = new CSVWriter(new FileWriter(itemCsvFilePath));
+        for(Item itemUp : itemList){
+            String[] q = itemUp.getInformation();
             itemStr.add(q);
         }
-        writer.writeAll(itemStr);
-        writer.close();
+        writer.writeAll(itemStr);} catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
-    public void addReceivedItemList(ArrayList<Item> receivedItemList) throws IOException, CsvValidationException {
+    public void addReceivedItemList(ArrayList<Item> receivedItemList)  {
         receivedItemList.clear();
+        CSVReader reader=null;
+        try{
         CSVParser csvParser = new CSVParserBuilder().withEscapeChar('\0').build();
-        CSVReader reader = new CSVReaderBuilder(new FileReader(receivedItemCsvFilePath)).withCSVParser(csvParser).build();
+        reader = new CSVReaderBuilder(new FileReader(receivedItemCsvFilePath)).withCSVParser(csvParser).build();
         String [] item;
         while((item = reader.readNext())!=null) {
-
             if(item[0].equalsIgnoreCase("letter")){
                 Item  a = new Item(item[0],item[1],item[2],item[3],item[4],item[5],item[6],item[7],item[8],item[9]);
                 receivedItemList.add(a);
@@ -114,28 +126,41 @@ public class ReadWriteItemCsv {
                 Item  a = new Parcel(item[0],item[1],item[2],item[3],item[4],item[5],item[6],item[7],item[8],item[9],item[10],item[11]);
                 receivedItemList.add(a);
             }
+        }} catch (IOException | CsvValidationException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        reader.close();
+
     }
 
-    public void updateReceivedItemCsv(ArrayList<Item> receivedItemList) throws IOException {
+    public void updateReceivedItemCsv(ArrayList<Item> receivedItemList)  {
         ArrayList<String []> receivedItemStr = new ArrayList<>();
-        CSVWriter writer = new CSVWriter(new FileWriter(receivedItemCsvFilePath));
+        CSVWriter writer=null;
+        try{
+        writer = new CSVWriter(new FileWriter(receivedItemCsvFilePath));
         for(Item itemUp : receivedItemList){
-
-            String[] q = null;
-            if(itemUp.getType().equalsIgnoreCase("letter")){
-                q=itemUp.getInformation();
-            }
-            if(itemUp.getType().equalsIgnoreCase("document")){
-                Document temp = (Document)itemUp;
-                q=temp.getInformation();            }
-            if(itemUp.getType().equalsIgnoreCase("parcel")){
-                Parcel temp = (Parcel)itemUp;
-                q=temp.getInformation();            }
+            String[] q = itemUp.getInformation();
             receivedItemStr.add(q);
         }
         writer.writeAll(receivedItemStr);
-        writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }

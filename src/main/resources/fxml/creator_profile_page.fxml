@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.6), rgba(120,120,120,1));" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="condo.controllers.CreatorProfilePageController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="214.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="140.0" layoutY="28.0" prefHeight="62.0" prefWidth="321.0" text="Creator's profile" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="140.0" AnchorPane.rightAnchor="139.0" AnchorPane.topAnchor="28.0">
+         <font>
+            <Font name="System Bold Italic" size="42.0" />
+         </font>
+      </Label>
+      <Label layoutX="155.0" layoutY="247.0" text="ชื่อ : นายพชร ศรีสมบูรณ์โชติ">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font></Label>
+      <Label layoutX="227.0" layoutY="281.0" text="รหัสนิสิต : 6210401295">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font></Label>
+      <Label layoutX="358.0" layoutY="247.0" text="ชื่อเล่น : AJ">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font></Label>
+      <ImageView fitHeight="67.0" fitWidth="76.0" layoutY="333.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/outline_home_white_48dp.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="244.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/500++631.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="108.0" layoutY="323.0" text="คำแนะนำ : โปรดศึกษา ไฟล์ 6210401295.pdf ก่อนใช้งานโปรแกรม">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -9,14 +9,13 @@ public class Parcel extends Item {
         this.trackingNumber = trackingNumber;
     }
 
+
     public String getCompany() {
         return company;
     }
-
     public String getTrackingNumber() {
         return trackingNumber;
     }
-
     @Override
     public String[] getInformation() {
         String[] q = new String[]{getType() , getDateAndTimeStr() ,getRoomNo(), getRecipient(),getSender(),getSize(),getImagePath(),getStaff(),company,trackingNumber,getReceivedDateAndTimeStr(),getReceivedWithStaff()};
