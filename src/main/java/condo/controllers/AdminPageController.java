@@ -54,9 +54,9 @@ public class AdminPageController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                welcomeLabel.setText(accountManage.getCurrentAdmin().getUsername());
-                welcomeLabel1.setText(accountManage.getCurrentAdmin().getUsername());
-                welcomeLabel11.setText(accountManage.getCurrentAdmin().getUsername());
+                welcomeLabel.setText("Welcome : "+accountManage.getCurrentAdmin().getUsername());
+                welcomeLabel1.setText("Welcome : "+accountManage.getCurrentAdmin().getUsername());
+                welcomeLabel11.setText("Welcome : "+accountManage.getCurrentAdmin().getUsername());
                 myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
                 myUsernameLabel.setText(accountManage.getCurrentAdmin().getUsername());
                 createStaffListTable();

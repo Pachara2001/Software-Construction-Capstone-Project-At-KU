@@ -52,12 +52,12 @@ public class StaffPageController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                welcomeLabel .setText(accountManage.getCurrentStaff().getName());
-                welcomeLabel2.setText(accountManage.getCurrentStaff().getName());
-                welcomeLabel3.setText(accountManage.getCurrentStaff().getName());
-                welcomeLabel4.setText(accountManage.getCurrentStaff().getName());
-                welcomeLabel5.setText(accountManage.getCurrentStaff().getName());
-                welcomeLabel6.setText(accountManage.getCurrentStaff().getName());
+                welcomeLabel .setText("Welcome : "+accountManage.getCurrentStaff().getName());
+                welcomeLabel2.setText("Welcome : "+accountManage.getCurrentStaff().getName());
+                welcomeLabel3.setText("Welcome : "+accountManage.getCurrentStaff().getName());
+                welcomeLabel4.setText("Welcome : "+accountManage.getCurrentStaff().getName());
+                welcomeLabel5.setText("Welcome : "+accountManage.getCurrentStaff().getName());
+                welcomeLabel6.setText("Welcome : "+accountManage.getCurrentStaff().getName());
                 myUsernameLabel.setText(accountManage.getCurrentStaff().getUsername());
                 myPasswordLabel.setText(accountManage.getCurrentStaff().getPassword());
 

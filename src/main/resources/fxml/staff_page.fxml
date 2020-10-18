@@ -37,11 +37,6 @@
                                     </TableView>
                                     <TextField fx:id="searchRoomTextField" layoutX="96.0" layoutY="379.0" prefHeight="31.0" prefWidth="147.0" text="Resident " />
                                     <Button fx:id="searchRoomBtn" layoutX="243.0" layoutY="379.0" mnemonicParsing="false" onAction="#handleSearchRoomBtn" stylesheets="@../stylesheets/button.css" text="SEARCH" />
-                                    <Label layoutX="526.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
-                                       <font>
-                                          <Font name="System Bold Italic" size="25.0" />
-                                       </font>
-                                    </Label>
                                     <ImageView fx:id="homeImg" fitHeight="67.0" fitWidth="76.0" layoutX="-1.0" layoutY="494.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/outline_home_white_48dp.png" />
@@ -50,7 +45,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </ImageView>
-                                    <Label fx:id="welcomeLabel" layoutX="659.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                                    <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" layoutX="344.0" layoutY="14.0" prefHeight="36.0" prefWidth="379.0" text="Label" textFill="#ebcbcb">
                                        <font>
                                           <Font name="System Bold Italic" size="25.0" />
                                        </font>
@@ -66,7 +61,7 @@
                                           <Font name="System Bold Italic" size="24.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="421.0" layoutY="209.0" text="Room's type :" textFill="#0d0d0d">
+                                    <Label layoutX="421.0" layoutY="209.0" text="Room's type :">
                                        <font>
                                           <Font name="System Bold Italic" size="18.0" />
                                        </font>
@@ -99,7 +94,7 @@
                                           <Font name="System Bold Italic" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="420.0" layoutY="236.0" text="Room's NO. :" textFill="#0d0d0d">
+                                    <Label layoutX="420.0" layoutY="236.0" text="Room's No. :">
                                        <font>
                                           <Font name="System Bold Italic" size="18.0" />
                                        </font>
@@ -160,12 +155,7 @@
                                           <Font name="System Bold Italic" size="15.0" />
                                        </font>
                                     </Label>
-                                    <Label layoutX="526.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
-                                       <font>
-                                          <Font name="System Bold Italic" size="25.0" />
-                                       </font>
-                                    </Label>
-                                    <Label fx:id="welcomeLabel2" layoutX="659.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                                    <Label fx:id="welcomeLabel2" alignment="CENTER_RIGHT" layoutX="342.0" layoutY="14.0" prefHeight="36.0" prefWidth="381.0" text="Label" textFill="#ebcbcb">
                                        <font>
                                           <Font name="System Bold Italic" size="25.0" />
                                        </font>
@@ -226,11 +216,6 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                                  <children>
-                                    <Label layoutX="526.0" layoutY="14.0" text="Welcome :" textFill="#f2f0f0">
-                                       <font>
-                                          <Font name="System Bold Italic" size="25.0" />
-                                       </font>
-                                    </Label>
                                     <ImageView fx:id="homeImg2" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/outline_home_white_48dp.png" />
@@ -249,7 +234,7 @@
                                     </TableView>
                                     <TextField fx:id="searchItemRoomNoTextField" layoutX="67.0" layoutY="439.0" text="Search by room no." />
                                     <Button fx:id="searchItemRoomNoBtn" layoutX="262.0" layoutY="439.0" mnemonicParsing="false" onAction="#handleSearchItemRoomNoBtn" stylesheets="@../stylesheets/button.css" text="SEARCH" />
-                                    <Label fx:id="welcomeLabel3" layoutX="659.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                                    <Label fx:id="welcomeLabel3" alignment="CENTER_RIGHT" layoutX="275.0" layoutY="14.0" prefHeight="36.0" prefWidth="448.0" text="Label" textFill="#ebcbcb">
                                        <font>
                                           <Font name="System Bold Italic" size="25.0" />
                                        </font>
@@ -321,11 +306,6 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                                  <children>
-                                    <Label layoutX="526.0" layoutY="14.0" text="Welcome :" textFill="#f2f0f0">
-                                       <font>
-                                          <Font name="System Bold Italic" size="25.0" />
-                                       </font>
-                                    </Label>
                                     <ImageView fx:id="homeImg5" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/outline_home_white_48dp.png" />
@@ -344,7 +324,7 @@
                                     </TableView>
                                     <TextField fx:id="searchReceivedItemRoomNoTextField" layoutX="89.0" layoutY="435.0" text="Search by room no." />
                                     <Button fx:id="searchReceivedItemRoomNoBtn" layoutX="284.0" layoutY="435.0" mnemonicParsing="false" onAction="#handleSearchReceivedItemRoomNoBtn" stylesheets="@../stylesheets/button.css" text="SEARCH" />
-                                    <Label fx:id="welcomeLabel6" layoutX="659.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                                    <Label fx:id="welcomeLabel6" alignment="CENTER_RIGHT" layoutX="287.0" layoutY="14.0" prefHeight="36.0" prefWidth="436.0" text="Label" textFill="#ebcbcb">
                                        <font>
                                           <Font name="System Bold Italic" size="25.0" />
                                        </font>
@@ -421,11 +401,6 @@
                            <content>
                               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                                  <children>
-                                    <Label layoutX="526.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
-                                       <font>
-                                          <Font name="System Bold Italic" size="25.0" />
-                                       </font>
-                                    </Label>
                                     <ImageView fx:id="homeImg3" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                                        <image>
                                           <Image url="@../images/outline_home_white_48dp.png" />
@@ -434,7 +409,7 @@
                                           <Cursor fx:constant="HAND" />
                                        </cursor>
                                     </ImageView>
-                                    <Label fx:id="welcomeLabel4" layoutX="659.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                                    <Label fx:id="welcomeLabel4" alignment="CENTER_RIGHT" layoutX="250.0" layoutY="14.0" prefHeight="36.0" prefWidth="473.0" text="Label" textFill="#ebcbcb">
                                        <font>
                                           <Font name="System Bold Italic" size="25.0" />
                                        </font>
@@ -516,11 +491,6 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
-                  <Label layoutX="565.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
-                     <font>
-                        <Font name="System Bold Italic" size="25.0" />
-                     </font>
-                  </Label>
                   <ImageView fx:id="homeImg4" fitHeight="67.0" fitWidth="76.0" layoutY="500.0" onMouseClicked="#handleHomeImg" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/outline_home_white_48dp.png" />
@@ -566,7 +536,7 @@
                         <Font name="System Bold Italic" size="15.0" />
                      </font>
                   </Button>
-                  <Label fx:id="welcomeLabel5" layoutX="698.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                  <Label fx:id="welcomeLabel5" alignment="CENTER_RIGHT" layoutX="230.0" layoutY="14.0" prefHeight="36.0" prefWidth="532.0" text="Label" textFill="#ebcbcb">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font>

@@ -21,11 +21,6 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
-                  <Label layoutX="559.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
-                     <font>
-                        <Font name="System Bold Italic" size="25.0" />
-                     </font>
-                  </Label>
                   <TableView fx:id="staffListTable" layoutX="10.0" layoutY="138.0" prefHeight="295.0" prefWidth="398.0" style="-fx-background-color: rgba(130,130,130);">
                     <columns>
                       <TableColumn fx:id="dateTimeCol" prefWidth="152.0" style="-fx-background-color: rgb(100,100,100);" text="DATE/TIME" />
@@ -81,7 +76,7 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="welcomeLabel" layoutX="698.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                  <Label fx:id="welcomeLabel" alignment="CENTER_RIGHT" layoutX="367.0" layoutY="14.0" prefHeight="36.0" prefWidth="395.0" text="Label" textFill="#ebcbcb">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font>
@@ -143,12 +138,7 @@
                      </font>
                   </Label>
                   <PasswordField fx:id="confirmTextField" layoutX="391.0" layoutY="304.0" />
-                  <Label layoutX="559.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
-                     <font>
-                        <Font name="System Bold Italic" size="25.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="welcomeLabel1" layoutX="698.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                  <Label fx:id="welcomeLabel1" alignment="CENTER_RIGHT" layoutX="371.0" layoutY="14.0" prefHeight="36.0" prefWidth="391.0" text="Label" textFill="#ebcbcb">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font>
@@ -221,12 +211,7 @@
                         <Cursor fx:constant="HAND" />
                      </cursor>
                   </ImageView>
-                  <Label layoutX="559.0" layoutY="14.0" text="Welcome : " textFill="#f2f0f0">
-                     <font>
-                        <Font name="System Bold Italic" size="25.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="welcomeLabel11" layoutX="698.0" layoutY="14.0" text="Label" textFill="#ebcbcb">
+                  <Label fx:id="welcomeLabel11" alignment="CENTER_RIGHT" layoutX="329.0" layoutY="14.0" prefHeight="36.0" prefWidth="433.0" text="Label" textFill="#ebcbcb">
                      <font>
                         <Font name="System Bold Italic" size="25.0" />
                      </font>

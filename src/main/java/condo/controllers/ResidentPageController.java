@@ -44,9 +44,9 @@ public class ResidentPageController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                welcomeLabel1.setText(accountManage.getCurrentResident().getName());
-                welcomeLabel2.setText(accountManage.getCurrentResident().getName());
-                welcomeLabel3.setText(accountManage.getCurrentResident().getName());
+                welcomeLabel1.setText("Welcome : "+accountManage.getCurrentResident().getName());
+                welcomeLabel2.setText("Welcome : "+accountManage.getCurrentResident().getName());
+                welcomeLabel3.setText("Welcome : "+accountManage.getCurrentResident().getName());
                 myUsernameLabel.setText(accountManage.getCurrentResident().getUsername());
                 myPasswordLabel.setText(accountManage.getCurrentResident().getPassword());
                 itemManage = new ItemManagement();
