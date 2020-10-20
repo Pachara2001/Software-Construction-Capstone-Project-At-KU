@@ -36,8 +36,8 @@ public class StaffAccount extends Account implements SortTime {
         if(floorInt<1)  throw new IllegalArgumentException( "Floor must more than 0.");
         int room = parseInt(roomNo);
         if(roomNo.length()!=2||room<1||room>99) throw new IllegalArgumentException ("Room number must be between 01-99.");
-        roomNo=building+floor+roomNo;
-        Room a = new Room(building, floor, roomNo, type, resident1, resident2);
+        roomNo=building+floorInt+roomNo;
+        Room a = new Room(building, ""+floorInt, roomNo, type, resident1, resident2);
         roomList.add(a);
 
     }

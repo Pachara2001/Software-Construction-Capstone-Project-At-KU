@@ -30,6 +30,8 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 
+import static java.lang.Integer.parseInt;
+
 public class StaffPageController {
     private AccountManagement accountManage;
     private RoomManagement roomManage;
@@ -105,6 +107,7 @@ public class StaffPageController {
         roomsTypeLabel.setText(selectedRoom.getType());
         resident1TextField.setText(selectedRoom.getResident1());
         resident2TextField.setText(selectedRoom.getResident2());
+        if(selectedRoom.getResident1().isEmpty()&&selectedRoom.getResident2().isEmpty()) updateRoomInfoBtn.setDisable(true);
     }
     public void clearSelectedRoom(){
         updateRoomInfoBtn.setDisable(true);
@@ -506,7 +509,7 @@ public class StaffPageController {
            accountManage.getCurrentStaff().addRoom((String)buildingChoiceBox.getValue(),createFloorTextField.getText(),createRoomNoTextField.getText(),(String) roomsTypeChoiceBox.getValue(),"","",roomManage.getRoomList());
            readWriteRoomCsv.updateRoomCsv(roomManage.getRoomList());
            createRoomListTable(roomManage.getRoomList());
-           errorCreateRoomLabel.setText("Success !! Your room number is "+buildingChoiceBox.getValue()+createFloorTextField.getText()+createRoomNoTextField.getText()+".");
+           errorCreateRoomLabel.setText("Success !! Your room number is "+buildingChoiceBox.getValue()+parseInt(createFloorTextField.getText())+createRoomNoTextField.getText()+".");
            errorCreateRoomLabel.setTextFill(Color.web("#44c55a"));
        }
        catch (IllegalArgumentException e) {
