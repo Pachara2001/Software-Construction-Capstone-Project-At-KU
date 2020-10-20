@@ -39,7 +39,6 @@ public class StaffAccount extends Account implements SortTime {
         roomNo=building+floorInt+roomNo;
         Room a = new Room(building, ""+floorInt, roomNo, type, resident1, resident2);
         roomList.add(a);
-
     }
 
     public void addResident(String roomNo , String resident1 , String resident2,ArrayList<Room> roomList){
@@ -88,7 +87,6 @@ public class StaffAccount extends Account implements SortTime {
             newItem = new Item(type,formattedDateTime,roomNo,recipient,sender,size,imagePath,name,"01/01/0001 00:00:01","-");
 
         }
-
 
         if(type.equalsIgnoreCase("Document")){
             if(roomNo.isEmpty()||recipient.isEmpty()||sender.isEmpty()||size.isEmpty()||imagePath.isEmpty()||importance.equals("-")) throw new IllegalArgumentException ("Fill out the required information.");

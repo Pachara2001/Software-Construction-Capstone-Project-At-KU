@@ -28,6 +28,8 @@ public class AdminAccount extends Account {
         else staff.setPermission("Not allowed");
     }
 
+
+
     @Override
     public String toString() {
         return "AdminAccount{" +

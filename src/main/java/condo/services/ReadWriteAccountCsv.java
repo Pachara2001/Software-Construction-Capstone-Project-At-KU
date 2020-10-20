@@ -63,6 +63,8 @@ public class ReadWriteAccountCsv {
             }
         }
     }
+
+
     public void addAdminList(ArrayList<AdminAccount> adminList) {
         CSVReader reader = null;
         adminList.clear();

@@ -10,6 +10,7 @@ public class ResidentAccount extends Account{
         this.name=name;
     }
 
+
     public String getRoomNo() { return roomNo; }
     public String getName() { return name; }
 }
