@@ -5,8 +5,6 @@ import java.util.ArrayList;
 public class RoomManagement {
     private ArrayList<Room> roomList;
 
-
-
     public RoomManagement() {
         roomList= new ArrayList<>();
     }

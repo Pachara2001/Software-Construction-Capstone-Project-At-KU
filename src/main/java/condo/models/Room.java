@@ -53,15 +53,5 @@ public class Room {
     public String getResident2() {
         return resident2;
     }
-    @Override
-    public String toString() {
-        return "Room{" +
-                "roomNo='" + roomNo + '\'' +
-                ", resident1='" + resident1 + '\'' +
-                ", building='" + building + '\'' +
-                ", floor='" + floor + '\'' +
-                ", type='" + type + '\'' +
-                ", resident2='" + resident2 + '\'' +
-                '}';
-    }
+
 }

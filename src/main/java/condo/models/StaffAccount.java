@@ -26,7 +26,6 @@ public class StaffAccount extends Account implements SortTime {
         this.name=name;
 
     }
-
     public void addRoom(String building, String floor, String roomNo, String type, String resident1, String resident2, ArrayList<Room> roomList){
         for(Room room : roomList){
             if(room.isRoomNoMatch(building+floor+roomNo)) throw new IllegalArgumentException( "This room already have an information.");
@@ -40,7 +39,6 @@ public class StaffAccount extends Account implements SortTime {
         Room a = new Room(building, ""+floorInt, roomNo, type, resident1, resident2);
         roomList.add(a);
     }
-
     public void addResident(String roomNo , String resident1 , String resident2,ArrayList<Room> roomList){
     int status = 0;
         for(Room room : roomList){
@@ -61,9 +59,6 @@ public class StaffAccount extends Account implements SortTime {
        if(status==0) throw new IllegalArgumentException("Room not found !!");
 
     }
-
-
-
     public void addItem(String type,String roomNo,String recipient,String sender , String size,String imagePath,String importance, String company, String trackingNumber,ArrayList<Item> itemList,ArrayList<Room> roomList){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
         String formattedDateTime = LocalDateTime.now().format(formatter);

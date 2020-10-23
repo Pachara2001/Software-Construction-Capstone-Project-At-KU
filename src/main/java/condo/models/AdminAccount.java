@@ -30,11 +30,5 @@ public class AdminAccount extends Account {
 
 
 
-    @Override
-    public String toString() {
-        return "AdminAccount{" +
-                "username='" + getUsername() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                '}';
-    }
+
 }
