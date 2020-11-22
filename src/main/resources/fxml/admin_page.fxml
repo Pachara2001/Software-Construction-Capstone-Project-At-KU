@@ -161,22 +161,12 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to right, rgba(120,120,120,0.4), rgba(120,120,120,1));">
                <children>
-                  <Label layoutX="191.0" layoutY="136.0" text="USERNAME :  ">
+                  <Label layoutX="191.0" layoutY="159.0" text="USERNAME :  ">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="191.0" layoutY="163.0" text="PASSWORD :">
-                     <font>
-                        <Font name="System Bold Italic" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="myUsernameLabel" layoutX="319.0" layoutY="136.0" text="admindsfsg">
-                     <font>
-                        <Font name="System Bold Italic" size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="myPasswordLabel" layoutX="319.0" layoutY="163.0" text="admindsfsg">
+                  <Label fx:id="myUsernameLabel" layoutX="319.0" layoutY="159.0" text="admindsfsg">
                      <font>
                         <Font name="System Bold Italic" size="18.0" />
                      </font>

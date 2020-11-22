@@ -34,7 +34,7 @@ public class ResidentPageController {
     private ItemManagement itemManage;
     private ReadWriteItemCsv readWriteItemCsv;
     private Item selectedItem,selectedReceivedItem;
-    @FXML private Label errorMyAccountLabel,imageErrorLabel,myPasswordLabel,myUsernameLabel,receivedInfoLabel1,receivedInfoLabel2,selectedAcceptStaffLabel,selectedItem1Label,selectedItem2Label,selectedItemInfo1Label,selectedItemInfo2Label,selectedReceived1Label,selectedReceived2Label,selectedReceivedAcceptStaffLabel,selectedReceivedPickedLabel,selectedReceivedSenderLabel,selectedReceivedSizeLabel,selectedReceivedStaffPickLabel,selectedSenderLabel,selectedSizeLabel,selReceivedImageErrorLabel,welcomeLabel1,welcomeLabel2,welcomeLabel3;
+    @FXML private Label errorMyAccountLabel,imageErrorLabel,myUsernameLabel,receivedInfoLabel1,receivedInfoLabel2,selectedAcceptStaffLabel,selectedItem1Label,selectedItem2Label,selectedItemInfo1Label,selectedItemInfo2Label,selectedReceived1Label,selectedReceived2Label,selectedReceivedAcceptStaffLabel,selectedReceivedPickedLabel,selectedReceivedSenderLabel,selectedReceivedSizeLabel,selectedReceivedStaffPickLabel,selectedSenderLabel,selectedSizeLabel,selReceivedImageErrorLabel,welcomeLabel1,welcomeLabel2,welcomeLabel3;
     @FXML private PasswordField confirmNewPassTextField,newPassTextField;
     @FXML private TableColumn itemDateCol,itemRecipientCol,itemRoomNoCol,itemTypeCol,receivedItemDateCol,receivedItemRecipientCol,receivedItemRoomNoCol,receivedItemTypeCol;
     @FXML private TableView itemTable,receivedItemTable;
@@ -48,7 +48,6 @@ public class ResidentPageController {
                 welcomeLabel2.setText("Welcome : "+accountManage.getCurrentResident().getName());
                 welcomeLabel3.setText("Welcome : "+accountManage.getCurrentResident().getName());
                 myUsernameLabel.setText(accountManage.getCurrentResident().getUsername());
-                myPasswordLabel.setText(accountManage.getCurrentResident().getPassword());
                 itemManage = new ItemManagement();
                 readWriteItemCsv = new ReadWriteItemCsv("csv","items.csv","receivedItem.csv");
                 readWriteItemCsv.addItemList(itemManage.getItemList());
@@ -205,7 +204,6 @@ public class ResidentPageController {
         if(newPassTextField.getText().isEmpty()||confirmNewPassTextField.getText().isEmpty()) errorMyAccountLabel.setText("Fill out the empty field.");
         else  if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
             accountManage.getCurrentResident().setPassword(newPassTextField.getText());
-            myPasswordLabel.setText(accountManage.getCurrentResident().getPassword());
             readWriteAccountCsv.updateResidentCsv(accountManage.getResidentList());
             errorMyAccountLabel.setText("Success !!");
             errorMyAccountLabel.setTextFill(Color.web("#44c55a"));

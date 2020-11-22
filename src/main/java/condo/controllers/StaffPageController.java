@@ -44,7 +44,7 @@ public class StaffPageController {
     @FXML private TableView roomTable,itemTable,receivedItemTable;
     @FXML private Button updateRoomInfoBtn,searchRoomBtn,searchSelectedItemImageBtn,changePassBtn,createResidentBtn,createItemBtn,createRoomBtn,createSearchImageBtn,itemRefreshBtn, receiveBtn,searchItemRoomNoBtn,searchReceivedItemRoomNoBtn;
     @FXML private ImageView homeImg,homeImg1,homeImg2,homeImg3,homeImg4,homeImg5,itemImage,receivedItemImage;
-    @FXML private Label roomNoLabel,selectedReceivedSizeLabel, selectedReceivedSenderLabel,selectedReceivedAcceptStaffLabel, selectedReceivedPickedLabel, selectedReceivedStaffPickLabel,selectedReceived1Label,receivedInfoLabel1,receivedInfoLabel2,selectedReceived2Label,selReceivedImageErrorLabel,searchReceivedErrorLabel,editRoomErrorLabel,searchRoomErrorLabel,searchItemErrorLabel,createItemErrorLabel,errorCreateResidentLabel,imageErrorLabel,errorCreateRoomLabel,errorNewPassLabel,errorReceivedLabel,myPasswordLabel,myUsernameLabel,roomsTypeLabel,selectedAcceptStaffLabel,selectedItem1Label,selectedItem2Label,selectedSenderLabel,selectedSizeLabel,welcomeLabel,welcomeLabel2,welcomeLabel3,welcomeLabel4,welcomeLabel5,welcomeLabel6,selectedItemInfo1Label,selectedItemInfo2Label;
+    @FXML private Label roomNoLabel,selectedReceivedSizeLabel, selectedReceivedSenderLabel,selectedReceivedAcceptStaffLabel, selectedReceivedPickedLabel, selectedReceivedStaffPickLabel,selectedReceived1Label,receivedInfoLabel1,receivedInfoLabel2,selectedReceived2Label,selReceivedImageErrorLabel,searchReceivedErrorLabel,editRoomErrorLabel,searchRoomErrorLabel,searchItemErrorLabel,createItemErrorLabel,errorCreateResidentLabel,imageErrorLabel,errorCreateRoomLabel,errorNewPassLabel,errorReceivedLabel,myUsernameLabel,roomsTypeLabel,selectedAcceptStaffLabel,selectedItem1Label,selectedItem2Label,selectedSenderLabel,selectedSizeLabel,welcomeLabel,welcomeLabel2,welcomeLabel3,welcomeLabel4,welcomeLabel5,welcomeLabel6,selectedItemInfo1Label,selectedItemInfo2Label;
     @FXML private PasswordField confirmNewPassTextField,newPassTextField;
     @FXML private TableColumn itemDateCol,itemRecipientCol,itemRoomNoCol,itemTypeCol,roomBuildingCol,roomFloorCol,roomNoCol,receivedItemDateCol,receivedItemRoomNoCol,receivedItemRecipientCol,receivedItemTypeCol;
     @FXML private TextField searchRoomTextField,resident2TextField,resident1TextField,createFloorTextField,createSizeTextField,createImageTextField,residentRoomNoTextField,createSenderTextField,createRecipientTextField,createCompanyTextField,createTrackTextField,createResident1TextField,createResident2TextField,createItemRoomNoTextField,createRoomNoTextField,recipientTextField,searchItemRoomNoTextField,searchReceivedItemRoomNoTextField;
@@ -61,7 +61,6 @@ public class StaffPageController {
                 welcomeLabel5.setText("Welcome : "+accountManage.getCurrentStaff().getName());
                 welcomeLabel6.setText("Welcome : "+accountManage.getCurrentStaff().getName());
                 myUsernameLabel.setText(accountManage.getCurrentStaff().getUsername());
-                myPasswordLabel.setText(accountManage.getCurrentStaff().getPassword());
 
             }
         });
@@ -377,7 +376,6 @@ public class StaffPageController {
         if(newPassTextField.getText().isEmpty()||confirmNewPassTextField.getText().isEmpty()) errorNewPassLabel.setText("Fill out the empty field.");
         if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
             accountManage.getCurrentStaff().setPassword(newPassTextField.getText());
-            myPasswordLabel.setText(accountManage.getCurrentStaff().getPassword());
             readWriteAccountCsv.updateStaffCsv(accountManage.getStaffList());
             errorNewPassLabel.setText("Success !!");
             errorNewPassLabel.setTextFill(Color.web("#44c55a"));
@@ -459,6 +457,27 @@ public class StaffPageController {
         }
         stage.show();
     }
+
+    @FXML public  void handleItemTypeChoiceBox(){
+     try{
+        if(((String)itemTypeChoiceBox.getValue()).equalsIgnoreCase("Letter")){
+            createCompanyTextField.setDisable(true);
+            createImportanceChoiceBox.setDisable(true);
+            createTrackTextField.setDisable(true);
+        }
+         if (((String)itemTypeChoiceBox.getValue()).equalsIgnoreCase("Document")){
+            createTrackTextField.setDisable(true);
+            createCompanyTextField.setDisable(true);
+             createImportanceChoiceBox.setDisable(false);
+        }
+        if (((String)itemTypeChoiceBox.getValue()).equalsIgnoreCase("Parcel")) {
+            createImportanceChoiceBox.setDisable(true);
+            createTrackTextField.setDisable(false);
+            createCompanyTextField.setDisable(false);
+        }}
+     catch (NullPointerException e){}
+
+    }
     @FXML public void handleCreateItemBtn()  {
         createItemErrorLabel.setTextFill(Color.web("#bf2d2d"));
         try{
@@ -467,21 +486,24 @@ public class StaffPageController {
             createItemListTable(itemManage.getItemList());
             createItemErrorLabel.setText("Success !!");
             createItemErrorLabel.setTextFill(Color.web("#44c55a"));
+            createSizeTextField.setText("");
+            createImageTextField.setText("");
+            createItemRoomNoTextField.setText("");
+            createSenderTextField.setText("");
+            createRecipientTextField.setText("");
+            createCompanyTextField.setText("");
+            createTrackTextField.setText("");
+            createCompanyTextField.setDisable(false);
+            createImportanceChoiceBox.setDisable(false);
+            createTrackTextField.setDisable(false);
+            itemTypeChoiceBox.getSelectionModel().clearSelection();
+            itemTypeChoiceBox.setValue("-");
+            createImportanceChoiceBox.setValue(null);
+            createImportanceChoiceBox.setValue("-");
         }
         catch (IllegalArgumentException e) {
             createItemErrorLabel.setText(e.getMessage());
         }
-        itemTypeChoiceBox.setValue(null);
-        itemTypeChoiceBox.setValue("-");
-        createImportanceChoiceBox.setValue(null);
-        createImportanceChoiceBox.setValue("-");
-        createSizeTextField.setText("");
-        createImageTextField.setText("");
-        createItemRoomNoTextField.setText("");
-        createSenderTextField.setText("");
-        createRecipientTextField.setText("");
-        createCompanyTextField.setText("");
-        createTrackTextField.setText("");
     }
 
 

@@ -39,14 +39,15 @@ public class RegisterPageController {
             readWriteAccountCsv.updateResidentCsv(accountManage.getResidentList());
             errorLabel.setText("Your username is "+nameTextField.getText()+roomNoTextField.getText().toUpperCase()+".");
             errorLabel.setTextFill(Color.web("#44c55a"));
+            roomNoTextField.setText("");
+            nameTextField.setText("");
+            passwordTextField.setText("");
+            confirmTextField.setText("");
         }
         catch (IllegalArgumentException e){
             errorLabel.setText(e.getMessage());
         }
-        roomNoTextField.setText("");
-        nameTextField.setText("");
-        passwordTextField.setText("");
-        confirmTextField.setText("");
+
     }
     else errorLabel.setText("Passwords do not match.");
 }

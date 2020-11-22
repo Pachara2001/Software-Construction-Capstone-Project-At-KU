@@ -1,7 +1,7 @@
 package condo.models;
 
 public class Account {
-    private  String username,password;
+    private String username,password;
 
     public Account(String username,String password){
         this.username=username;

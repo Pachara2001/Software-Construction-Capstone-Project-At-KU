@@ -40,7 +40,7 @@ public class AdminPageController {
     private StaffAccount selectedStaff;
     private ReadWriteAccountCsv readWriteAccountCsv;
 
-    @FXML private Label welcomeLabel,welcomeLabel1,welcomeLabel11,nameLabel,permissionLabel,attemptLabel,imageErrorLabel,errorCreateAccountLabel,errorMyAccountLabel,myPasswordLabel,myUsernameLabel;
+    @FXML private Label welcomeLabel,welcomeLabel1,welcomeLabel11,nameLabel,permissionLabel,attemptLabel,imageErrorLabel,errorCreateAccountLabel,errorMyAccountLabel,myUsernameLabel;
     @FXML private PasswordField confirmNewPassTextField,confirmTextField,newPassTextField,passwordTextField;
     @FXML private ImageView staffPicImageView;
     @FXML private TableView staffListTable;
@@ -57,7 +57,6 @@ public class AdminPageController {
                 welcomeLabel.setText("Welcome : "+accountManage.getCurrentAdmin().getUsername());
                 welcomeLabel1.setText("Welcome : "+accountManage.getCurrentAdmin().getUsername());
                 welcomeLabel11.setText("Welcome : "+accountManage.getCurrentAdmin().getUsername());
-                myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
                 myUsernameLabel.setText(accountManage.getCurrentAdmin().getUsername());
                 createStaffListTable();
             }
@@ -115,7 +114,6 @@ public class AdminPageController {
         if(newPassTextField.getText().isEmpty()||confirmNewPassTextField.getText().isEmpty()) errorMyAccountLabel.setText("Fill out the empty field.");
         else  if(newPassTextField.getText().equals(confirmNewPassTextField.getText())){
                accountManage.getCurrentAdmin().setPassword(newPassTextField.getText());
-               myPasswordLabel.setText(accountManage.getCurrentAdmin().getPassword());
                readWriteAccountCsv.updateAdminCsv(accountManage.getAdminList());
                errorMyAccountLabel.setText("Success !!");
                errorMyAccountLabel.setTextFill(Color.web("#44c55a"));
